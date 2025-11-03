@@ -22,33 +22,19 @@
 						<td><input type="password" name="pw" id="pw"></td>
 					</tr>
 				</table>
-				<button type="button">로그인</button>
+				<button type="submit">로그인</button>
 			</div>
-			<div>
-				<input type="radio" name="customerOrEmpSel" id="customerOrEmpSel" value="customer" checked>customer
-				<input type="radio" name="customerOrEmpSel" id="customerOrEmpSel" value="emp">emp
-			</div>
+			<div style="margin:8px 0">
+        		<input type="radio" name="customerOrEmpSel" id="selCustomer" value="customer"
+               		<c:if test="${empty param.customerOrEmpSel or param.customerOrEmpSel == 'customer'}">checked</c:if>>
+        		<label for="selCustomer">customer</label>
+
+        		<input type="radio" name="customerOrEmpSel" id="selEmp" value="emp"
+               		<c:if test="${param.customerOrEmpSel == 'emp'}">checked</c:if>>
+        		<label for="selEmp">emp</label>
+      		</div>
 		</div>
 	</form>
-	<div>
-		<div>
-			<table>
-				<tr>
-					<td>id</td>
-					<td><input type="text" name="id" id="id"></td>
-				</tr>
-				<tr>
-					<td>pw</td>
-					<td><input type="password" name="pw" id="pw"></td>
-				</tr>
-			</table>
-			<button type="button">로그인</button>
-		</div>
-		<div>
-			<input type="radio" name="customerOrEmpSel" id="customerOrEmpSel" value="customer" checked>customer
-			<input type="radio" name="customerOrEmpSel" id="customerOrEmpSel" value="emp">emp
-		</div>
-	</div>
-	<a href="${pageContext.request.contextPath}/out/addMember">회원가입</a>
+	<a href="${pageContext.request.contextPath}/out/addCustomer">회원가입</a>
 </body>
 </html>
