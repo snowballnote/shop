@@ -1,40 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<meta charset="UTF-8">
-<title>shop</title>
+	<meta charset="UTF-8">
+	<title>Login | Shop</title>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/recess.css">
 </head>
 <body>
-	<h1>login</h1>
-	<form method="post" action="${pageContext.request.contextPath}/out/login">
-		<div>
-			<div>
-				<table>
-					<tr>
-						<td>id</td>
-						<td><input type="text" name="id" id="id"></td>
-					</tr>
-					<tr>
-						<td>pw</td>
-						<td><input type="password" name="pw" id="pw"></td>
-					</tr>
-				</table>
-				<button type="submit">로그인</button>
-			</div>
-			<div style="margin:8px 0">
-        		<input type="radio" name="customerOrEmpSel" id="selCustomer" value="customer"
-               		<c:if test="${empty param.customerOrEmpSel or param.customerOrEmpSel == 'customer'}">checked</c:if>>
-        		<label for="selCustomer">customer</label>
 
-        		<input type="radio" name="customerOrEmpSel" id="selEmp" value="emp"
-               		<c:if test="${param.customerOrEmpSel == 'emp'}">checked</c:if>>
-        		<label for="selEmp">emp</label>
-      		</div>
+<div class="page-center">
+	<div class="login-wrap">
+		<h1 class="login-title">Login</h1>
+		
+		<div class="role-switch" style="justify-content:center; margin-bottom:18px;">
+	        <input type="radio" name="customerOrEmpSel" id="selCustomer" value="customer"
+               <c:if test="${empty param.customerOrEmpSel or param.customerOrEmpSel == 'customer'}">checked</c:if>>
+	        <label for="selCustomer">Customer</label>
+
+        	<input type="radio" name="customerOrEmpSel" id="selEmp" value="emp"
+            	<c:if test="${param.customerOrEmpSel == 'emp'}">checked</c:if>>
+        	<label for="selEmp">Employee</label>
 		</div>
-	</form>
-	<a href="${pageContext.request.contextPath}/out/addCustomer">회원가입</a>
+		
+		<c:if test="${not empty loginMsg}">
+        	<div class="msg">${loginMsg}</div>
+      	</c:if>
+
+      	<form method="post" action="${pageContext.request.contextPath}/out/login" autocomplete="off">
+	        <input type="text" name="id" id="id" class="input" placeholder="Id">
+	        <input type="password" name="pw" id="pw" class="input" placeholder="Password">
+			
+			<div style="margin-top:14px;">
+          		<button type="submit" class="btn">Sign In</button>
+        	</div>
+      </form>
+      
+	  <div class="link-row">
+	  	or <a href="${pageContext.request.contextPath}/out/addCustomer"><em>Register</em></a>
+	  </div>
+      
+      <a href="" class="underline-link">Forgot your password?</a>
+    </div>
+  </div>
 </body>
 </html>

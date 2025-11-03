@@ -34,12 +34,26 @@ public class AddCustomerController extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/view/out/addCustomer.jsp").forward(request, response);
             return;
         }
+        // 비밀번호 유효성 검사
         if (!pw.equals(pw2) || pw.length() < 4) {
         	request.setAttribute("msg", "비밀번호를 확인해주세요. (4자 이상/일치)");
         	request.getRequestDispatcher("/WEB-INF/view/out/addCustomer.jsp").forward(request, response);
             return;
         }
         
+        // 이름 유효성 검사 (한글만, 3자 이상)
+        if (!name.matches("^[가-힣]{2,}$")) { 
+            request.setAttribute("msg", "이름은 한글로 2자 이상 입력해주세요.");
+            request.getRequestDispatcher("/WEB-INF/view/out/addCustomer.jsp").forward(request, response);
+            return;
+        }
+
+        // 전화번호 유효성 검사 (숫자만, 최대 11자리)
+        if (!phone.matches("^[0-9]{10,11}$")) {
+            request.setAttribute("msg", "전화번호는 숫자만 입력하며 10~11자리여야 합니다.");
+            request.getRequestDispatcher("/WEB-INF/view/out/addCustomer.jsp").forward(request, response);
+            return;
+        }
         // DTO 구성
         Customer c = new Customer();
         c.setCustomerId(id);
