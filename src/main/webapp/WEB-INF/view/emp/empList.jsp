@@ -10,7 +10,8 @@
 <body>
 	<h1>empList</h1>
 	<!-- emp menu include -->
-	<c:import url="/WEB-INF/view/inc/empMenu.jsp"></c:import>
+	<jsp:include page="/WEB-INF/view/inc/header.jsp" />
+	<jsp:include page="/WEB-INF/view/inc/empMenu.jsp" />
 	<hr>
 	
 	<div>
@@ -31,25 +32,34 @@
 		 	</tr>
 		 	
 		 	<c:forEach var="e" items="${empList}">
-		 		<tr>
-		 			<td>${e.empCode}</td>
-		 			<td>${e.empId}</td>
-		 			<td>${e.empName}</td>
-		 			<td>${e.createdate}</td>
-		 			<td>
-		 				<a href="${pageContext.request.contextPath}/emp/modifyEmpActive?empCode=${e.empCode}&currentActive=${e.active}"></a><!-- 버튼 클릭시 비활성화 활성화 시키기. -->
-		 				${e.active == 0 ? '비활성화' : '활성화'}
-		 			</td>
-		 		</tr>
-		 	</c:forEach>
+				<tr>
+					<td>${e.empCode}</td>
+					<td>${e.empId}</td>
+					<td>${e.empName}</td>
+					<td>${e.createdate}</td>
+					<td>
+						<c:set var="nextActive" value="${e.active == 1 ? 0 : 1}" />
+						<a href="${pageContext.request.contextPath}/emp/modifyEmpActive?empCode=${e.empCode}&nextActive=${nextActive}&currentPage=${currentPage}">
+							${e.active == 1 ? '활성화' : '비활성화'}
+						</a>
+					</td>
+				</tr>
+			</c:forEach>
 		 </table>
-		 <!-- 
 		 <div>
-		 	<a href="">[이전]</a>
-		 	${page }
-		 	<a href="">[다음]</a>
-		 </div>
-		  -->
+		 	<!-- 이전 페이지로 이동 -->
+		 	<c:if test="${currentPage > 1}">
+				<a href="${pageContext.request.contextPath}/emp/empList?currentPage=${currentPage - 1}">[이전]</a>
+			</c:if>
+
+			<!-- 현재 페이지 / 마지막 페이지 표시 -->
+			<span>${currentPage} / ${lastPage}</span>
+
+			<!-- 다음 페이지로 이동 -->
+			<c:if test="${currentPage < lastPage}">
+				<a href="${pageContext.request.contextPath}/emp/empList?currentPage=${currentPage + 1}">[다음]</a>
+			</c:if>
+		</div>
 	</div>
 </body>
 </html>

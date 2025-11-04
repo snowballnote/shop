@@ -1,0 +1,31 @@
+@charset "UTF-8";
+/* header.css */
+.r-header{
+  position:sticky;
+  top:0;
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+}
+.r-header__inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  max-width:1200px;
+  margin:0 auto;
+  padding:10px 20px;
+}
+.r-brand{
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:0.02em;
+}
+.r-nav-right{
+  display:flex;
+  gap:20px;
+}
+.r-icon svg{
+  width:22px; height:22px;
+  stroke:#111; fill:none; stroke-width:2;
+  transition:opacity .2s;
+}
+.r-icon:hover svg{ opacity:.7; }

@@ -82,11 +82,7 @@ public class CustomerDao {
 		
 		String sql = """
 				INSERT INTO customer (
-					customer_code customerCode,
-	                customer_id customerId,
-	                customer_pw customerPw,
-	                customer_name customerName,
-	                customer_phone customerPhone,
+					customer_code, customer_id, customer_pw , customer_name, customer_phone, 
 	                point,
 	                createdate 
 				) VALUES (
