@@ -15,28 +15,40 @@ import dto.Emp;
 @WebServlet("/emp/empList")
 public class EmpListController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Integer currentPage = 1;
+		// 기본 페이지 번호 설정
+		int currentPage = 1;
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-		int rowPerPage = 10;
-		int beginRow = (currentPage-1) * rowPerPage;
 		
+		// 페이지당 행 수와 시작 행 계산
+		int rowPerPage = 10;
+		int beginRow = (currentPage - 1) * rowPerPage;
+		
+		// 마지막 페이지(총 행 수 기반 계산용)
 		int lastPage = 0;
 		
+		// DAO 호출
 		EmpDao empDao = new EmpDao();
 		List<Emp> empList = null;
+		
 		try {
+			// 사원 목록 조회
 			empList = empDao.selectEmpListByPage(beginRow, rowPerPage);
+			
+			// 전체 사원 수 조회 -> 마지막 페이지 계산
+			int totalCount = empDao.countEmp();
+			lastPage = (int) Math.ceil((double) totalCount / rowPerPage);
 		}catch (Exception e) {
 			throw new ServletException(e);
 		}
 		
 		// 모델 속성
 		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("lastPage", lastPage);
 		request.setAttribute("empList", empList);
 		
+		// view로 포워드
 		request.getRequestDispatcher("/WEB-INF/view/emp/empList.jsp").forward(request, response);
-		
 	}
 }
