@@ -3,7 +3,6 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 
 import dto.Customer;
 
@@ -17,15 +16,15 @@ public class CustomerDao {
 		
 		String sql = """
 				SELECT 
-					CUSTOMER_CODE customerCode,
-	                CUSTOMER_ID customerId,
-	                CUSTOMER_PW customerPw,
-	                CUSTOMER_NAME customerName,
-	                CUSTOMER_PHONE customerPhone,
-	                POINT point,
-	                CREATEDATE createdate
-	            FROM CUSTOMER
-	            WHERE CUSTOMER_ID = ? AND CUSTOMER_PW = ?
+					customer_code customerCode,
+	                customer_id customerId,
+	                customer_pw customerPw,
+	                customer_name customerName,
+	                customer_phone customerPhone,
+	                point,
+	                createdate
+	            FROM customer
+	            WHERE customer_id = ? AND customer_pw = ?
 	        """;
 		
 		conn = DBConnection.getConn();
@@ -41,11 +40,7 @@ public class CustomerDao {
             c.setCustomerName(rs.getString("customerName"));
             c.setCustomerPhone(rs.getString("customerPhone"));
             c.setPoint(rs.getInt("point"));
-            
-            Timestamp ts = rs.getTimestamp("createdate");
-            if (ts != null) {
-                c.setCreatedate(new java.util.Date(ts.getTime()));
-            }
+            c.setCreatedate(rs.getString("createdate"));
 		}
 
 		rs.close();
@@ -62,7 +57,7 @@ public class CustomerDao {
         ResultSet rs = null;
         boolean result = false;
         
-        String sql = "SELECT 1 FROM CUSTOMER WHERE CUSTOMER_ID=?";
+        String sql = "SELECT 1 FROM customer WHERE customer_id=?";
         
         conn = DBConnection.getConn();
         stmt = conn.prepareStatement(sql);
@@ -86,16 +81,16 @@ public class CustomerDao {
 		int row = 0;
 		
 		String sql = """
-				INSERT INTO CUSTOMER (
-					CUSTOMER_CODE,
-					CUSTOMER_ID,
-					CUSTOMER_PW,
-					CUSTOMER_NAME,
-					CUSTOMER_PHONE,
-					POINT,
-					CREATEDATE
+				INSERT INTO customer (
+					customer_code customerCode,
+	                customer_id customerId,
+	                customer_pw customerPw,
+	                customer_name customerName,
+	                customer_phone customerPhone,
+	                point,
+	                createdate 
 				) VALUES (
-					CUSTOMER_SEQ.NEXTVAL, ?, ?, ?, ?, 0, SYSDATE
+					seq_customer.NEXTVAL, ?, ?, ?, ?, 0, SYSDATE
 				)
 			""";
 		

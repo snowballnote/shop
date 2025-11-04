@@ -12,21 +12,21 @@
 	<div class="login-wrap">
 		<h1 class="login-title">Login</h1>
 		
-		<div class="role-switch" style="justify-content:center; margin-bottom:18px;">
-	        <input type="radio" name="customerOrEmpSel" id="selCustomer" value="customer"
-               <c:if test="${empty param.customerOrEmpSel or param.customerOrEmpSel == 'customer'}">checked</c:if>>
-	        <label for="selCustomer">Customer</label>
-
-        	<input type="radio" name="customerOrEmpSel" id="selEmp" value="emp"
-            	<c:if test="${param.customerOrEmpSel == 'emp'}">checked</c:if>>
-        	<label for="selEmp">Employee</label>
-		</div>
-		
 		<c:if test="${not empty loginMsg}">
         	<div class="msg">${loginMsg}</div>
       	</c:if>
 
-      	<form method="post" action="${pageContext.request.contextPath}/out/login" autocomplete="off">
+      	<form id="loginForm" method="post" action="${pageContext.request.contextPath}/out/login" autocomplete="off">
+	        <div class="role-switch" style="justify-content:center; margin-bottom:18px;">
+		    	<input type="radio" name="customerOrEmpSel" id="selCustomer" value="customer"
+	               <c:if test="${empty param.customerOrEmpSel or param.customerOrEmpSel == 'customer'}">checked</c:if>>
+		        <label for="selCustomer">Customer</label>
+
+        		<input type="radio" name="customerOrEmpSel" id="selEmp" value="emp"
+            		<c:if test="${param.customerOrEmpSel == 'emp'}">checked</c:if>>
+        		<label for="selEmp">Employee</label>
+			</div>
+			
 	        <input type="text" name="id" id="id" class="input" placeholder="Id">
 	        <input type="password" name="pw" id="pw" class="input" placeholder="Password">
 			

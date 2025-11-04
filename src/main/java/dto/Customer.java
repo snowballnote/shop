@@ -9,7 +9,7 @@ public class Customer {
 	private String customerName;
 	private String customerPhone;
 	private int point;
-	private Date createdate;
+	private String createdate;
 	
 	public int getCustomerCode() {
 		return customerCode;
@@ -47,10 +47,10 @@ public class Customer {
 	public void setPoint(int point) {
 		this.point = point;
 	}
-	public Date getCreatedate() {
+	public String getCreatedate() {
 		return createdate;
 	}
-	public void setCreatedate(Date createdate) {
+	public void setCreatedate(String createdate) {
 		this.createdate = createdate;
 	}
 	@Override

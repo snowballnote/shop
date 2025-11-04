@@ -1,0 +1,167 @@
+/* /static/css/mypage.css — RECESS “My Account” 클론 스타일 */
+
+/* ========== Fonts (optional: 실제 파일 두면 사용됨) ========== */
+@font-face {
+  font-family: 'MaisonNeue';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/MaisonNeue-Medium.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MaisonNeue';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/MaisonNeue-Bold.woff2') format('woff2');
+  font-display: swap;
+}
+
+/* ========== Theme tokens ========== */
+:root{
+  --black:#201f1f;
+  --white:#ffffff;
+  --gray:#6b6e72;
+  --page-width:966px;       /* ourrecess가 쓰는 폭 */
+  --gutter:30px;
+  --vpad:48px;
+}
+
+/* ========== Base ========== */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  color:var(--black);
+  background:var(--white);
+  font-family: 'MaisonNeue', 'Noto Sans KR', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight:500;
+  letter-spacing:0.01em;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* 페이지 래퍼: 중앙 배치 + 내부는 좌측 정렬 */
+.page-wrapper{
+  max-width:var(--page-width);
+  margin:0 auto;
+  padding:var(--vpad) var(--gutter);
+  text-align:left;
+}
+
+/* 제목은 중앙 정렬(스크린샷 기준) */
+.page-title{
+  margin:12px 0 36px;
+  text-align:center;
+  font-size:26px;
+  font-weight:700;
+  letter-spacing:0.02em;
+}
+
+/* 섹션: 라인/박스 없이 여백만 */
+.account-section{
+  margin:36px 0 28px;
+}
+
+/* 소제목 */
+.section-title{
+  margin:0 0 12px;
+  font-size:16px;
+  font-weight:700;
+  letter-spacing:0.02em;
+}
+
+/* 계정 정보 텍스트 */
+.account-info{
+  margin:0 0 6px;
+  line-height:1.9;
+}
+
+/* 링크 리스트: 전부 얇은 밑줄 + 대문자 + 자간 */
+.account-links{
+  margin-top:10px;
+}
+.account-links a{
+  display:block;
+  width:max-content;
+  margin:8px 0;
+  color:var(--black);
+  text-decoration:underline;
+  text-underline-offset:3px;
+  text-decoration-thickness:1px;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  font-size:14px;
+  font-weight:700;
+  transition:opacity .2s ease;
+}
+.account-links a:hover{ opacity:.55; }
+
+/* 안내 메시지 */
+.msg{
+  color:var(--gray);
+  font-size:14px;
+}
+
+/* 테이블이 들어올 수도 있으니 최소 스타일만(거의 보이지 않게) */
+.table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+.table th,
+.table td{
+  padding:10px 0;
+  text-align:left;
+  vertical-align:middle;
+  border:none;              /* ourrecess는 라인 거의 없음 */
+}
+.table thead th{
+  font-weight:700;
+}
+.table a{
+  color:var(--black);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+
+/* 공통 밑줄 링크 유틸(로그인/마이페이지에서 재사용) */
+.underline-link{
+  color:var(--black);
+  text-decoration:underline;
+  text-underline-offset:3px;
+  text-decoration-thickness:1px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  font-weight:700;
+  font-size:14px;
+  transition:opacity .2s ease;
+}
+.underline-link:hover{ opacity:.55; }
+
+/* KPI 카드가 있다면 ourrecess 느낌으로 라인 없이 간격만 */
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:14px;
+  margin:18px 0 8px;
+}
+.kpi-card{
+  padding:10px 0;
+  border:none;
+  background:transparent;
+  font-size:14px;
+}
+.kpi-card strong{
+  display:block;
+  margin-top:2px;
+  font-size:18px;
+  font-weight:700;
+}
+
+/* 반응형 */
+@media (max-width:749px){
+  :root{ --gutter:20px; --vpad:36px; }
+  .page-title{ font-size:22px; }
+  .kpi-grid{ grid-template-columns:1fr 1fr; }
+}
