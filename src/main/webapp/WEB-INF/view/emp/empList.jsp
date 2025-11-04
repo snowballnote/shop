@@ -10,8 +10,10 @@
 <body>
 	<h1>empList</h1>
 	<!-- emp menu include -->
+	<!-- 
 	<jsp:include page="/WEB-INF/view/inc/header.jsp" />
 	<jsp:include page="/WEB-INF/view/inc/empMenu.jsp" />
+	-->
 	<hr>
 	
 	<div>

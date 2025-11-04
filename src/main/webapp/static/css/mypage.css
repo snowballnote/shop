@@ -1,6 +1,6 @@
-/* /static/css/mypage.css — RECESS “My Account” 클론 스타일 */
+/* /static/css/mypage.css — RECESS 스타일 + 중앙 정렬 */
 
-/* ========== Fonts (optional: 실제 파일 두면 사용됨) ========== */
+/* ===== 폰트 세팅 ===== */
 @font-face {
   font-family: 'MaisonNeue';
   font-style: normal;
@@ -16,152 +16,174 @@
   font-display: swap;
 }
 
-/* ========== Theme tokens ========== */
-:root{
-  --black:#201f1f;
-  --white:#ffffff;
-  --gray:#6b6e72;
-  --page-width:966px;       /* ourrecess가 쓰는 폭 */
-  --gutter:30px;
-  --vpad:48px;
+/* ===== 색상 변수 ===== */
+:root {
+  --black: #201f1f;
+  --gray: #6b6e72;
+  --white: #ffffff;
+  --page-width: 900px;
+  --vpad: 80px;
+  --gutter: 30px;
 }
 
-/* ========== Base ========== */
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  color:var(--black);
-  background:var(--white);
-  font-family: 'MaisonNeue', 'Noto Sans KR', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  font-weight:500;
-  letter-spacing:0.01em;
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
+/* ===== 기본 ===== */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'MaisonNeue', 'Noto Sans KR', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--black);
+  background: var(--white);
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
 }
 
-/* 페이지 래퍼: 중앙 배치 + 내부는 좌측 정렬 */
-.page-wrapper{
-  max-width:var(--page-width);
-  margin:0 auto;
-  padding:var(--vpad) var(--gutter);
-  text-align:left;
+/* ===== 페이지 래퍼 ===== */
+.page-wrapper {
+  width: 100%;
+  max-width: var(--page-width);
+  padding: var(--vpad) var(--gutter);
+  text-align: center;
 }
 
-/* 제목은 중앙 정렬(스크린샷 기준) */
-.page-title{
-  margin:12px 0 36px;
-  text-align:center;
-  font-size:26px;
-  font-weight:700;
-  letter-spacing:0.02em;
+/* ===== 페이지 타이틀 ===== */
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 60px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-/* 섹션: 라인/박스 없이 여백만 */
-.account-section{
-  margin:36px 0 28px;
+/* ===== 섹션 ===== */
+.account-section {
+  margin-bottom: 70px;
 }
 
-/* 소제목 */
-.section-title{
-  margin:0 0 12px;
-  font-size:16px;
-  font-weight:700;
-  letter-spacing:0.02em;
+/* ===== 섹션 제목 ===== */
+.section-title {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 16px;
+  letter-spacing: 0.03em;
 }
 
-/* 계정 정보 텍스트 */
-.account-info{
-  margin:0 0 6px;
-  line-height:1.9;
+/* ===== 계정 정보 ===== */
+.account-info {
+  font-size: 15px;
+  color: var(--gray);
+  margin-bottom: 12px;
+  line-height: 1.8;
 }
 
-/* 링크 리스트: 전부 얇은 밑줄 + 대문자 + 자간 */
-.account-links{
-  margin-top:10px;
+/* ===== 링크 ===== */
+.account-links a {
+  display: inline-block;
+  margin: 6px 14px;
+  color: var(--black);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
 }
-.account-links a{
-  display:block;
-  width:max-content;
-  margin:8px 0;
-  color:var(--black);
-  text-decoration:underline;
-  text-underline-offset:3px;
-  text-decoration-thickness:1px;
-  text-transform:uppercase;
-  letter-spacing:0.06em;
-  font-size:14px;
-  font-weight:700;
-  transition:opacity .2s ease;
-}
-.account-links a:hover{ opacity:.55; }
-
-/* 안내 메시지 */
-.msg{
-  color:var(--gray);
-  font-size:14px;
+.account-links a:hover {
+  opacity: 0.55;
 }
 
-/* 테이블이 들어올 수도 있으니 최소 스타일만(거의 보이지 않게) */
-.table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:14px;
-}
-.table th,
-.table td{
-  padding:10px 0;
-  text-align:left;
-  vertical-align:middle;
-  border:none;              /* ourrecess는 라인 거의 없음 */
-}
-.table thead th{
-  font-weight:700;
-}
-.table a{
-  color:var(--black);
-  text-decoration:underline;
-  text-underline-offset:3px;
+/* ===== 메시지 ===== */
+.msg {
+  color: var(--gray);
+  font-size: 14px;
+  margin-top: 8px;
 }
 
-/* 공통 밑줄 링크 유틸(로그인/마이페이지에서 재사용) */
-.underline-link{
-  color:var(--black);
-  text-decoration:underline;
-  text-underline-offset:3px;
-  text-decoration-thickness:1px;
-  letter-spacing:0.06em;
-  text-transform:uppercase;
-  font-weight:700;
-  font-size:14px;
-  transition:opacity .2s ease;
+/* ===== 테이블 (최근 주문용) ===== */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-top: 10px;
 }
-.underline-link:hover{ opacity:.55; }
-
-/* KPI 카드가 있다면 ourrecess 느낌으로 라인 없이 간격만 */
-.kpi-grid{
-  display:grid;
-  grid-template-columns:repeat(3, minmax(0,1fr));
-  gap:14px;
-  margin:18px 0 8px;
+.table th, .table td {
+  padding: 10px 0;
+  border: none;
+  text-align: center;
 }
-.kpi-card{
-  padding:10px 0;
-  border:none;
-  background:transparent;
-  font-size:14px;
+.table th {
+  font-weight: 700;
+  color: var(--black);
 }
-.kpi-card strong{
-  display:block;
-  margin-top:2px;
-  font-size:18px;
-  font-weight:700;
+.table td {
+  color: #333;
+}
+.table a {
+  color: var(--black);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-/* 반응형 */
-@media (max-width:749px){
-  :root{ --gutter:20px; --vpad:36px; }
-  .page-title{ font-size:22px; }
-  .kpi-grid{ grid-template-columns:1fr 1fr; }
+/* ===== 공지사항 ===== */
+.notice-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+.notice-list li {
+  margin: 6px 0;
+}
+.notice-list a {
+  color: var(--black);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.notice-date {
+  color: var(--gray);
+  font-size: 13px;
+}
+
+/* ===== KPI 카드 ===== */
+.kpi-grid {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 24px;
+  margin: 30px 0 50px;
+}
+.kpi-card {
+  flex: 1;
+  max-width: 220px;
+  background: #fafafa;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 20px 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+.kpi-card strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* ===== 반응형 ===== */
+@media (max-width: 768px) {
+  .page-wrapper {
+    padding: 60px 20px;
+  }
+  .kpi-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+  .kpi-card {
+    width: 100%;
+    max-width: 320px;
+  }
 }
