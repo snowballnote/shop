@@ -33,58 +33,31 @@
 				고객 관리
 			</a>
 		</li>
-
+		<!-- 탈퇴 ID 관리 -->
+		<li>
+			<a href="${pageContext.request.contextPath}/emp/outidList"
+			   class="${fn:contains(pageContext.request.requestURI, '/emp/outidList') ? 'is-active' : ''}">
+				<span class="emoji">🙋‍♀️</span>
+				탈퇴 ID 관리
+			</a>
+		</li>
 		<!-- 상품 관리 -->
 		<li>
-			<a href="${pageContext.request.contextPath}/emp/goodsList"
+			<a href=""
 			   class="${fn:contains(pageContext.request.requestURI, '/emp/goodsList') ? 'is-active' : ''}">
 				<span class="emoji">🛍️</span>
 				상품 관리
 			</a>
 		</li>
 		<li>
-			<a href="${pageContext.request.contextPath}/emp/addGoods"
-			   class="${fn:contains(pageContext.request.requestURI, '/emp/addGoods') ? 'is-active' : ''}">
-				<span class="emoji">📦</span>
-				상품 등록
-			</a>
-		</li>
-
-		<!-- 주문 관리 -->
-		<li>
-			<a href="${pageContext.request.contextPath}/emp/orderList"
-			   class="${fn:contains(pageContext.request.requestURI, '/emp/orderList') ? 'is-active' : ''}">
-				<span class="emoji">🧾</span>
-				주문 관리
-			</a>
-		</li>
-
-		<!-- 공지사항 -->
-		<li>
-			<a href="${pageContext.request.contextPath}/emp/noticeList"
-			   class="${fn:contains(pageContext.request.requestURI, '/emp/noticeList') ? 'is-active' : ''}">
-				<span class="emoji">📢</span>
-				공지사항
-			</a>
-		</li>
-
-		<!-- 리뷰 / 포인트 / 문의 -->
-		<li>
-			<a href="${pageContext.request.contextPath}/emp/reviewList"
-			   class="${fn:contains(pageContext.request.requestURI, '/emp/reviewList') ? 'is-active' : ''}">
-				<span class="emoji">⭐</span>
-				리뷰 관리
-			</a>
-		</li>
-		<li>
-			<a href="${pageContext.request.contextPath}/emp/pointHistory"
+			<a href=""
 			   class="${fn:contains(pageContext.request.requestURI, '/emp/pointHistory') ? 'is-active' : ''}">
 				<span class="emoji">💰</span>
 				포인트 내역
 			</a>
 		</li>
 		<li>
-			<a href="${pageContext.request.contextPath}/emp/questionList"
+			<a href=""
 			   class="${fn:contains(pageContext.request.requestURI, '/emp/questionList') ? 'is-active' : ''}">
 				<span class="emoji">❓</span>
 				문의 관리

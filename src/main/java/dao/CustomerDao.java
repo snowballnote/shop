@@ -3,10 +3,72 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 import dto.Customer;
+import dto.Outid;
 
 public class CustomerDao {
+	// 직원에 의해 강제탈퇴
+	public void deleteCustomerByEmp(Outid outid) throws Exception {
+		Connection conn = null;
+		PreparedStatement ptmtCustomer = null;
+		PreparedStatement ptmtOutId = null;
+		ResultSet rs = null;
+				
+		String sqlCustomer = """
+			DELETE FROM customer WHERE customer_id=?
+		""";
+		String sqlOutid = """
+			INSERT INTO outid(id, memo, createdate)
+			VALUES(?, ?, ?)
+		""";
+
+		
+		// JDBC connection의 기본 Commit설정값 auto commit = true : false 변경 후 transaction 적용
+		try {
+			conn = DBConnection.getConn();
+			conn.setAutoCommit(false); // 개발자가 commit / rollback 직접 구현이 필요
+			ptmtCustomer = conn.prepareStatement(sqlCustomer); // customer 삭제
+			
+			// param 설정 // ?, ?, ?
+			
+			int row = ptmtCustomer.executeUpdate();
+			if(row == 1) {
+				ptmtOutId = conn.prepareStatement(sqlOutid);
+				
+				// param 설정 // ?, ?, ?
+				
+				ptmtOutId.executeUpdate(); // outid 입력
+			} else {
+				throw new SQLException();
+			}
+			conn.commit(); // 정상적으로 처리가 끝났을 떄만  commit
+		} catch(SQLException e) {
+			try {
+				conn.rollback();
+			}catch(SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();		
+		} finally{
+			try {
+				// 순서
+				ptmtCustomer.close();
+				ptmtOutId.close();
+				conn.close();
+			}catch(SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	// 직원 로그인시 전체 고객 리스트 확인
+	public List<Customer> selectCustomerList(int beginRow, int rowPerPage){
+		return null;
+	}
+	
 	// 로그인
 	public Customer selectCustomerByLogin(Customer paramC) throws Exception {
 		Connection conn = null;
