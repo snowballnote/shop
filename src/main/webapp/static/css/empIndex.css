@@ -1,102 +1,16 @@
 @charset "UTF-8";
 
-/* 기본 설정 */
-* {
-	box-sizing: border-box;
+/* 대시보드 카드 */
+.emp-dashboard{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 16px;
+  margin-top: 16px;
 }
-
-html, body {
-	margin: 0;
-	padding: 0;
-	font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
-	color: #111;
-	background: #fff;
+.emp-card{
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
 }
-
-/* 전체 레이아웃 */
-.emp-layout {
-	display: grid;
-	grid-template-columns: 240px 1fr;
-	min-height: 100vh;
-}
-
-/* 왼쪽 메뉴 */
-.emp-sidemenu {
-	border-right: 1px solid #e5e7eb;
-	padding: 20px;
-	background: #fafafa;
-}
-
-.emp-sidemenu__brand {
-	font-weight: 800;
-	margin-bottom: 16px;
-}
-
-.emp-sidemenu__list {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-.emp-sidemenu__list a {
-	display: block;
-	padding: 10px 8px;
-	border-radius: 6px;
-	color: #111;
-	text-decoration: none;
-}
-
-.emp-sidemenu__list a:hover {
-	background: #f1f5f9;
-}
-
-/* 오른쪽 콘텐츠 */
-.emp-content {
-	padding: 24px;
-}
-
-.emp-header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 12px;
-	margin-bottom: 16px;
-}
-
-.emp-user {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-}
-
-.logout-btn {
-	padding: 8px 12px;
-	border: 1px solid #e5e7eb;
-	border-radius: 8px;
-	text-decoration: none;
-	color: #111;
-}
-
-.logout-btn:hover {
-	background: #f8fafc;
-}
-
-/* 대시보드 카드 (선택사항) */
-.emp-dashboard {
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 16px;
-	margin-top: 16px;
-}
-
-.emp-card {
-	border: 1px solid #e5e7eb;
-	border-radius: 12px;
-	padding: 16px;
-	background: #fff;
-}
-
-.emp-card .num {
-	font-size: 28px;
-	font-weight: 800;
-}
+.emp-card .num{ font-size: 28px; font-weight: 800; }

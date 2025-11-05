@@ -1,101 +1,104 @@
 @charset "UTF-8";
 
-/* ===== EMP MENU 전체 레이아웃 ===== */
-.emp-menu {
-  width: 240px;
-  background: #fff;
-  border-right: 1px solid #eee;
-  padding: 20px 16px;
-  box-sizing: border-box;
-  font-family: "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+/* === 기본 초기화 === */
+.emp-menu ul {
+	list-style: none;   /* 점 제거 */
+	padding-left: 0;    /* 들여쓰기 제거 */
+	margin: 0;
 }
 
-/* ===== 타이틀 ===== */
+.emp-menu a {
+	color: #111;              /* 링크 기본색 */
+	text-decoration: none;    /* 밑줄 제거 */
+}
+.emp-menu a:visited {
+	color: #111;              /* 보라색 방지 */
+}
+
+/* === 직원 메인페이지 이동 버튼 === */
+.emp-home {
+	padding: 16px 18px 10px;
+	border-bottom: 1px solid #e5e7eb;
+	margin-bottom: 8px;
+}
+
+.home-link {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-weight: 700;
+	font-size: 15px;
+	color: #111;
+	line-height: 1.4;
+	transition: background 0.2s ease, color 0.2s ease;
+}
+
+.home-link .emoji {
+	width: 18px;
+	height: 18px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 17px;
+	margin-right: 2px;
+	transform: translateY(1px);
+}
+
+/* === 메뉴 타이틀 === */
 .emp-menu__title {
-  font-size: 14px;
-  font-weight: 700;
-  color: #777;
-  margin-bottom: 14px;
-  letter-spacing: 0.05em;
+	font-weight: 800;
+	letter-spacing: .04em;
+	padding: 18px 18px 8px;
+	color: #111;
 }
 
-/* ===== 메뉴 리스트 ===== */
+/* === 메뉴 리스트 === */
 .emp-nav {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+	list-style: none;
+	margin: 8px 0 16px;
+	padding: 0 10px 0 8px;
 }
 
-/* ===== 메뉴 아이템 ===== */
+.emp-nav li {
+	margin: 2px 0;
+}
+
 .emp-nav a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: #333;
-  font-size: 14px;
-  font-weight: 500;
-
-  /* 여유 공간 확보 (찝힘 방지) */
-  padding: 10px 14px;
-  min-height: 42px;
-  line-height: 1.35;
-
-  border-radius: 10px;
-  transition: all 0.2s ease;
-  overflow: visible;
-  -webkit-font-smoothing: antialiased;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 10px;
+	border-radius: 8px;
+	color: #111;
+	text-decoration: none;
+	font-weight: 500;
+	transition: background 0.2s;
 }
 
-/* ===== 이모지 정렬 보정 ===== */
-.emp-nav a .emoji {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  line-height: 1;
-  width: 20px;
-  height: 20px;
-  transform: translateY(1px); /* 살짝 내려서 정렬 맞춤 */
-}
-
-/* ===== hover & active ===== */
 .emp-nav a:hover {
-  background: #f5f5f5;
-  color: #000;
+	background: #f1f5f9;
 }
 
 .emp-nav a.is-active {
-  background: #111;
-  color: #fff;
+	background: #111;
+	color: #fff;
 }
 
-/* ===== active 상태에서도 높이 유지 ===== */
-.emp-nav a.is-active,
-.emp-nav a:hover {
-  line-height: 1.35;
-  min-height: 42px;
-}
-
-/* ===== 구분선 ===== */
+/* === 구분선 === */
 .emp-sep {
-  height: 1px;
-  background: #eee;
-  margin: 14px 0;
+	height: 1px;
+	background: #e5e7eb;
+	margin: 10px 18px;
 }
 
-/* ===== 반응형 (좁은 화면 대비) ===== */
-@media (max-width: 900px) {
-  .emp-menu {
-    width: 200px;
-    padding: 16px 12px;
-  }
-  .emp-nav a {
-    font-size: 13px;
-    padding: 8px 12px;
-    gap: 8px;
-  }
+/* === 이모지 크기 조정 === */
+.emp-nav .emoji {
+	display: inline-flex;
+	width: 18px;
+	height: 18px;
+	align-items: center;
+	justify-content: center;
+	font-size: 16px;
+	line-height: 1;
+	transform: translateY(1px);
 }
