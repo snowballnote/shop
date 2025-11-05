@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
+<head>
     <meta charset="UTF-8">
     <title>EMP 목록 | Shop Admin</title>
     <!-- 순서 중요: 공통 → 메뉴 → 페이지전용 -->

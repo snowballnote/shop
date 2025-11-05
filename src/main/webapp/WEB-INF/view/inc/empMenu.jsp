@@ -35,7 +35,7 @@
 
 		<!-- 고객 관리 -->
 		<li>
-			<a href="${pageContext.request.contextPath}/emp/customerList"
+			<a href="${pageContext.request.contextPath}/customer/customerList"
 			   class="${fn:endsWith(pageContext.request.requestURI, '/emp/customerList') ? 'is-active' : ''}">
 				<span class="emoji">🙋‍♀️</span>
 				고객 관리
@@ -53,12 +53,13 @@
 
 		<!-- 상품 관리 -->
 		<li>
-			<a href=""
+			<a href="${pageContext.request.contextPath}/emp/goodsList"
 			   class="${fn:endsWith(pageContext.request.requestURI, '/emp/goodsList') ? 'is-active' : ''}">
 				<span class="emoji">🛍️</span>
 				상품 관리
 			</a>
 		</li>
+		<!-- 
 		<li>
 			<a href=""
 			   class="${fn:endsWith(pageContext.request.requestURI, '/emp/addGoods') ? 'is-active' : ''}">
@@ -66,16 +67,16 @@
 				상품 등록
 			</a>
 		</li>
-
+		 -->
 		<!-- 주문 관리 -->
 		<li>
-			<a href=""
+			<a href="${pageContext.request.contextPath}/emp/orderList"
 			   class="${fn:endsWith(pageContext.request.requestURI, '/emp/orderList') ? 'is-active' : ''}">
 				<span class="emoji">🧾</span>
 				주문 관리
 			</a>
 		</li>
-
+		
 		<!-- 공지사항 -->
 		<li>
 			<a href=""

@@ -12,7 +12,7 @@ import java.util.List;
 import dao.CustomerDao;
 import dto.Customer;
 
-@WebServlet("/customerList")
+@WebServlet("/customer/customerList")
 public class CustomerListController extends HttpServlet {
 	private CustomerDao customerDao; // 이렇게 클래스 설계하기
 	
@@ -28,9 +28,13 @@ public class CustomerListController extends HttpServlet {
 		
 		// 마지막 페이지(총 행 수 기반 계산용)
 		int lastPage = 0;
+		
+		// DAO 호출
 		customerDao = new CustomerDao();
 		List<Customer> customerList = null;
+		
 		try {
+			// 사원 목록 조회
 			customerList = customerDao.selectCustomerList(beginRow, rowPerPage);
 			
 			// 전체 사원 수 조회 -> 마지막 페이지 계산
@@ -45,10 +49,6 @@ public class CustomerListController extends HttpServlet {
 		request.setAttribute("lastPage", lastPage);
 		request.setAttribute("customerList", customerList);
 				
-		request.getRequestDispatcher("/WEB-INF/view/customer/customerList.jsp").forward(request, response);
-		
+		request.getRequestDispatcher("/WEB-INF/view/customer/customerList.jsp").forward(request, response);	
 	}
-	
-
-
 }
