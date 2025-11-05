@@ -8,45 +8,26 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
-/**
- * Servlet Filter implementation class EmpFilter
- */
-@WebFilter("/emp/*")
+// @WebFilter("/emp/*")
 public class EmpFilter extends HttpFilter implements Filter {
        
-    /**
-     * @see HttpFilter#HttpFilter()
-     */
-    public EmpFilter() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see Filter#destroy()
-	 */
-	public void destroy() {
-		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		// place your code here
-
-		// pass the request along the filter chain
+		// 요청 전
+		System.out.println("pre outFilter");
+		HttpSession session = ((HttpServletRequest)request).getSession();
+		if(session.getAttribute("loginEmp") == null) {
+			((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/out/login");
+			return;
+		}
+		
 		chain.doFilter(request, response);
-	}
-
-	/**
-	 * @see Filter#init(FilterConfig)
-	 */
-	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
 	}
 
 }

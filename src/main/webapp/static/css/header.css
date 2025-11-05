@@ -1,31 +1,88 @@
 @charset "UTF-8";
-/* header.css */
-.r-header{
-  position:sticky;
-  top:0;
-  background:#fff;
-  border-bottom:1px solid #e5e7eb;
+/* header.css — RECESS 톤 + 이모티콘 대응 */
+
+/* 헤더 전체 */
+.r-header {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  z-index: 1000;
 }
-.r-header__inner{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  max-width:1200px;
-  margin:0 auto;
-  padding:10px 20px;
+
+/* 내부 정렬 */
+.r-header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 28px;
 }
-.r-brand{
-  font-size:22px;
-  font-weight:900;
-  letter-spacing:0.02em;
+
+/* 브랜드 */
+.r-brand .r-logo {
+  font-family: "MaisonNeue", "Noto Sans KR", sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  color: #201f1f;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
 }
-.r-nav-right{
-  display:flex;
-  gap:20px;
+.r-brand .r-logo:hover {
+  opacity: 0.6;
 }
-.r-icon svg{
-  width:22px; height:22px;
-  stroke:#111; fill:none; stroke-width:2;
-  transition:opacity .2s;
+
+/* 네비게이션 오른쪽 영역 */
+.r-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 22px;
 }
-.r-icon:hover svg{ opacity:.7; }
+
+/* 공통 아이콘 (SVG 또는 이모티콘) */
+.r-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #111;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+  line-height: 1;
+}
+.r-icon:hover {
+  opacity: 0.6;
+}
+
+/* SVG 아이콘용 */
+.r-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #111;
+  fill: none;
+  stroke-width: 2;
+}
+
+/* ✅ 이모티콘 전용 */
+.r-icon.emoji {
+  font-size: 20px;
+  line-height: 1;
+  width: 22px;
+  height: 22px;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .r-header__inner {
+    padding: 10px 18px;
+  }
+  .r-brand .r-logo {
+    font-size: 18px;
+  }
+  .r-icon.emoji {
+    font-size: 18px;
+    width: 20px;
+    height: 20px;
+  }
+}
