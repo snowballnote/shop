@@ -129,7 +129,7 @@ public class EmpDao {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		int total = 0;
+		int totalCount = 0;
 		
 		String sql = "SELECT COUNT(*) cnt FROM emp";
 		
@@ -138,13 +138,13 @@ public class EmpDao {
 		rs = stmt.executeQuery();
 		
 		if (rs.next()) {
-			total = rs.getInt("cnt");
+			totalCount = rs.getInt("cnt");
 		}
 		rs.close();
         stmt.close();
 		conn.close();
 		
-		return total;
+		return totalCount;
 	}
 	
 	// 로그인

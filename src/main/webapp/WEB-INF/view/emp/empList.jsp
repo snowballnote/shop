@@ -19,7 +19,7 @@
       <main class="admin-content">
         <header class="emp-header">
           <h1 class="page-title">직원 목록</h1>
-          <a class="btn btn--dark" href="${pageContext.request.contextPath}/emp/addEmp">사원추가</a>
+          <a class="btn btn--dark" href="${pageContext.request.contextPath}/emp/addEmp">직원추가</a>
         </header>
 
         <section>

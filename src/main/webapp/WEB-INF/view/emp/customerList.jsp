@@ -5,9 +5,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>CUSTOMER 목록 | Shop Admin</title>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/adminLayout.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/empMenu.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/empList.css">
+	<!-- 순서 중요: 공통 → 메뉴 → 페이지전용 -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/adminLayout.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/empMenu.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/empList.css">
 </head>
 <body>
 	<div class="admin-layout">
@@ -48,7 +49,7 @@
 								<td>${c.createdate}</td>
 								<td style="text-align:center;">
 									<a class="page-btn"
-										href="${pageContext.request.contextPath}"/emp/customerOrders?customerCode=${c.customerCode}&currentPage=${currentPage}">
+										href="${pageContext.request.contextPath} /emp/customerOrders?customerCode=${c.customerCode}&currentPage=${currentPage}">
 										주문 보기
 									</a>
 								</td>

@@ -14,60 +14,47 @@ public class CustomerDao {
 	// 직원에 의해 강제탈퇴
 	public void deleteCustomerByEmp(Outid outid) throws Exception {
 		Connection conn = null;
-		PreparedStatement ptmtCustomer = null;
-		PreparedStatement ptmtOutId = null;
-		ResultSet rs = null;
-				
-		String sqlCustomer = """
-				DELETE FROM customer WHERE customer_id=?
-			""";
-		String sqlOutid = """
-				INSERT INTO outid(id, memo, createdate)
-				VALUES(?, ?, ?)
-			""";
+		PreparedStatement psDel = null; // delete
+		PreparedStatement psIns = null; // insert
 
-		
-		// JDBC connection의 기본 Commit설정값 auto commit = true : false 변경 후 transaction 적용
-		// 개발자가 commit / rollback을 직접 제어 (트랜잭션 적용)
+		String sqlCustomer = "DELETE FROM customer WHERE customer_id = ?";
+		// createdate는 DB에서 SYSDATE로 채움
+		String sqlOutid   = "INSERT INTO outid (id, memo, createdate) VALUES (?, ?, SYSDATE)";
+
 		try {
 			conn = DBConnection.getConn();
-			conn.setAutoCommit(false);
-			// customer 삭제
-			ptmtCustomer = conn.prepareStatement(sqlCustomer);
-			ptmtCustomer.setString(1, outid.getId()); // 삭제할 고객 ID
-			int row = ptmtCustomer.executeUpdate();
-			
-			// outid 테이블에 기록 (강제 탈퇴 정보 저장)
-			if(row == 1) {
-				ptmtOutId = conn.prepareStatement(sqlOutid);
-				ptmtCustomer.setString(1, outid.getId());
-				ptmtCustomer.setString(2, outid.getMemo());
-				ptmtOutId.setString(3, outid.getCreatedate());
-				
-				ptmtOutId.executeUpdate();
-			} else {
-				throw new SQLException("고객 삭제 실패: customer_id 없음");
-			}
-			
-			// commit (모든 작업이 정상 완료된 경우만)
-			conn.commit();
-		} catch(SQLException e) {
-			// 예외 발생 시 rollback
-			try {
+			conn.setAutoCommit(false); // 트랜잭션 시작
+
+			// 고객 삭제
+			psDel = conn.prepareStatement(sqlCustomer);
+			psDel.setString(1, outid.getId().trim());
+			int row = psDel.executeUpdate();
+			System.out.println("[DELETE customer] id=" + outid.getId() + ", row=" + row);
+			if (row != 1) {
+				// 대상이 없거나 조건 불일치 → 롤백 후 예외
 				conn.rollback();
-			}catch(SQLException e1) {
-				e1.printStackTrace();
+				throw new SQLException("고객 삭제 실패 또는 대상 없음: " + outid.getId());
 			}
-			e.printStackTrace();		
-		} finally{
-			try {
-				// 순서
-				ptmtCustomer.close();
-				ptmtOutId.close();
-				conn.close();
-			}catch(SQLException e1) {
-				e1.printStackTrace();
-			}
+
+			// 탈퇴 기록 (outid)
+			psIns = conn.prepareStatement(sqlOutid);
+			psIns.setString(1, outid.getId().trim());
+			psIns.setString(2, outid.getMemo() == null ? "" : outid.getMemo());
+			int ins = psIns.executeUpdate();
+			System.out.println("[INSERT outid] id=" + outid.getId() + ", row=" + ins);
+
+			// 모두 성공하면 커밋
+			conn.commit();
+
+		} catch (SQLException e) { // 이부분에서 
+			// 예외 시 트랜잭션 롤백 + 예외 전파(컨트롤러에서 처리)
+			if (conn != null) try { conn.rollback(); } catch (SQLException ignore) {}
+			throw e;
+		} finally {
+			// NPE 방지 null 체크 후 close
+			if (psIns != null) try { psIns.close(); } catch (SQLException ignore) {}
+			if (psDel != null) try { psDel.close(); } catch (SQLException ignore) {}
+			if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
 		}
 	}
 	

@@ -12,7 +12,7 @@ import java.util.List;
 import dao.CustomerDao;
 import dto.Customer;
 
-@WebServlet("/customer/customerList")
+@WebServlet("/emp/customerList")
 public class CustomerListController extends HttpServlet {
 	private CustomerDao customerDao; // 이렇게 클래스 설계하기
 	
@@ -49,6 +49,6 @@ public class CustomerListController extends HttpServlet {
 		request.setAttribute("lastPage", lastPage);
 		request.setAttribute("customerList", customerList);
 				
-		request.getRequestDispatcher("/WEB-INF/view/customer/customerList.jsp").forward(request, response);	
+		request.getRequestDispatcher("/WEB-INF/view/emp/customerList.jsp").forward(request, response);	
 	}
 }
