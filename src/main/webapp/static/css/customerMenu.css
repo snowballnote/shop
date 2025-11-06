@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+/* 레이아웃을 좌측 메뉴 + 우측 콘텐츠로 쓰고 싶다면
+   .customer-layout 컨테이너를 페이지에서 사용해줘 */
+.customer-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;  /* 좌측 메뉴 260px */
+  gap: 0;
+  min-height: 100vh;
+}
+
+/* 사이드 메뉴 박스 */
+.customer-menu {
+  padding: 28px 24px;
+  border-right: 1px solid #eaecef;
+  background: #fff;                 /* 밝은 톤 (RECESS 느낌) */
+}
+
+/* 섹션 타이틀 */
+.cm-title {
+  margin: 0 0 18px;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: .02em;
+  color: #111;
+}
+
+/* 링크 묶음 */
+.cm-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 대문자 + 두꺼운 밑줄 스타일(스크린샷 느낌) */
+.cm-links a {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #111;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  line-height: 1.5;
+}
+
+/* hover/active */
+.cm-links a:hover {
+  opacity: .85;
+  text-underline-offset: 4px;
+}
+
+.cm-links a.is-active {
+  opacity: 1;
+  text-decoration-thickness: 3px;   /* 현재 위치 강조 */
+}

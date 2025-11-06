@@ -7,14 +7,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import dao.GoodsDao;
+@WebServlet("/customer/addressList")
+public class AddressListController extends HttpServlet {
 
-
-@WebServlet("/emp/goodsList")
-public class GoodsListController extends HttpServlet {
-	private GoodsDao goodsDao = new GoodsDao();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// form
-		request.getRequestDispatcher("/WEB-INF/view/emp/goodsList.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/view/customer/addressList.jsp").forward(request,response);
 	}
+
 }

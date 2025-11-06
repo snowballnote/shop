@@ -2,7 +2,7 @@ package dto;
 
 public class GoodsImg {
 	private int goodsCode;
-	private String fileName;
+	private String filename;
 	private String originName;
 	private String contentType;
 	private String createdate;
@@ -14,11 +14,11 @@ public class GoodsImg {
 	public void setGoodsCode(int goodsCode) {
 		this.goodsCode = goodsCode;
 	}
-	public String getFileName() {
-		return fileName;
+	public String getFilename() {
+		return filename;
 	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setFilename(String name) {
+		this.filename = name;
 	}
 	public String getOriginName() {
 		return originName;

@@ -23,11 +23,11 @@ public class AddCustomerController extends HttpServlet {
 			throws ServletException, IOException {
 
 		// 파라미터 수집 + 정규화
-		String id    = trim(request.getParameter("id"));
-		String pw    = trim(request.getParameter("pw"));
-		String pw2   = trim(request.getParameter("pw2"));
-		String name  = trim(request.getParameter("name"));
-		String phone = trim(request.getParameter("phone"));
+		String id    = request.getParameter("id");
+		String pw    = request.getParameter("pw");
+		String pw2   = request.getParameter("pw2");
+		String name  = request.getParameter("name");
+		String phone = request.getParameter("phone");
 
 		// 값 보존 (재표시)
 		request.setAttribute("id", id);
@@ -93,18 +93,6 @@ public class AddCustomerController extends HttpServlet {
 			// 서버 에러는 컨테이너로 위임
 			throw new ServletException(e);
 		}
-	}
-	
-	// 폼 유효성 검사 실패 시, 에러 메시지를 담아 다시 JSP로 포워드한다.
-	private void fail(HttpServletRequest req, HttpServletResponse resp, String msg)
-			throws ServletException, IOException {
-		req.setAttribute("msg", msg);
-		req.getRequestDispatcher("/WEB-INF/view/out/addCustomer.jsp").forward(req, resp);
-	}
-	
-	// 문자열 앞뒤 공백을 제거한다.
-	private String trim(String s) {
-		return (s == null) ? null : s.trim();
 	}
 	
 	// 문자열이 null이거나, 공백 문자만 포함되어 있는지 확인한다.

@@ -13,7 +13,7 @@
   <body>
     <div class="admin-layout">
       <!-- 왼쪽 메뉴 -->
-      <jsp:include page="/WEB-INF/view/inc/empMenu.jsp" />
+      <c:import url="/WEB-INF/view/inc/empMenu.jsp" />
 
       <!-- 오른쪽 콘텐츠 -->
       <main class="admin-content">

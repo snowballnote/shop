@@ -60,7 +60,7 @@
 			</a>
 		</li>
 		<li>
-			<a href=""
+			<a href="${pageContext.request.contextPath}/emp/addGoods"
 			   class="${fn:endsWith(pageContext.request.requestURI, '/emp/addGoods') ? 'is-active' : ''}">
 				<span class="emoji">📦</span>
 				상품 등록
