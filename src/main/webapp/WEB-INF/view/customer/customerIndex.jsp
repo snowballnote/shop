@@ -31,8 +31,9 @@
         <h2 class="cx-subtitle">Account Details</h2>
 
         <div class="cx-account">
-          <p class="cx-line">${loginCustomer.customerName}</p>
-          <p class="cx-line">${loginCustomer.customerPhone}</p>
+        	WELCOME
+          	<p class="cx-line">${loginCustomer.customerName}</p>
+			<p class="cx-line cx-point">Points: ${loginCustomer.point}</p>
 
           <nav class="cx-links">
             <a class="cx-link" href="${pageContext.request.contextPath}/customer/addressList">YOUR ADDRESSES</a>

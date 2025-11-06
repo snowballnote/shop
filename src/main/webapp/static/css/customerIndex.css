@@ -1,0 +1,130 @@
+@charset "UTF-8";
+
+/* ----- Tokens (RECESS 느낌) ----- */
+:root{
+  --page-width: 966px;
+  --black: #201f1f;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+}
+
+/* ----- Base ----- */
+*{ box-sizing: border-box; }
+html,body{
+  margin:0; padding:0;
+  color:var(--black);
+  background:#fff;
+  font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;
+  line-height:1.6;
+}
+
+/* ----- Header (상단 중앙 타이틀) ----- */
+.cx-header{
+  max-width: var(--page-width);
+  margin: 48px auto 20px;
+  padding: 0 20px;
+  display:flex; justify-content:center;
+}
+.cx-header h1{
+  margin:0;
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:.02em;
+}
+
+/* ----- Main wrapper (중앙 정렬, 고정 폭) ----- */
+.cx-main{
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 20px 64px;
+}
+
+/* ----- Section 공통 ----- */
+.cx-section{ margin: 28px 0 40px; }
+.cx-subtitle{
+  margin:0 0 16px;
+  font-size:18px;
+  font-weight:800;
+}
+
+/* ----- Account details ----- */
+.cx-account{ }
+.cx-line{ margin: 0 0 6px; }
+.cx-links{
+  display:flex; flex-wrap:wrap;
+  gap:14px; margin-top:14px;
+}
+.cx-link{
+  font-weight:700;
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+
+/* ----- Order table / empty text ----- */
+.cx-empty{ color:var(--muted); }
+.cx-tablewrap{ overflow-x:auto; }
+.cx-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+.cx-table th,
+.cx-table td{
+  padding:10px 12px;
+  border-bottom:1px solid var(--border);
+  text-align:left;
+}
+.cx-table th{
+  background:#fafafa;
+  font-weight:700;
+}
+.cx-table tr:hover{ background:#f8fafc; }
+
+.cx-underline{
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+
+/* ----- Footer ----- */
+.cx-footer{
+  max-width: var(--page-width);
+  margin: 0 auto 56px;
+  padding: 0 20px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* ----- Responsive (모바일 여백만 조정) ----- */
+@media (max-width: 480px){
+  .cx-header{ margin-top:36px; }
+  .cx-header h1{ font-size:24px; }
+}
+/* 링크 세로 정렬 */
+.cx-links {
+  display: flex;
+  flex-direction: column; /* 세로로 쌓기 */
+  gap: 8px;               /* 링크 간격 */
+}
+
+.cx-link {
+  display: inline-block;  /* 줄 전체를 차지하지 않게 깔끔 */
+}
+/* 링크 보라색(visited) 방지 + 기본 컬러 고정 */
+.cx-link {
+  color: #111;
+  text-decoration: none;
+}
+
+.cx-link:visited,
+.cx-link:hover,
+.cx-link:active,
+.cx-link:focus {
+  color: #111;            /* 항상 같은 색 */
+  text-decoration: underline; /* 호버 시만 밑줄(원하면 제거 가능) */
+}
+
+/* 모바일 탭 하이라이트 제거 (옵션) */
+.cx-link {
+  -webkit-tap-highlight-color: transparent;
+}
+

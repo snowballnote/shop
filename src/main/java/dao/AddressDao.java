@@ -4,15 +4,64 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import dto.Address;
+import dto.Customer;
 
 public class AddressDao {
+	// 주소 리스트
+	public List<Address> selectAddressList() throws Exception{
+		Connection conn = null;
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    List<Address> list = new ArrayList<>();
+	    
+	    final String sql = """
+	    		SELECT
+	    			  address_code  AS addressCode
+	    			, customer_code AS customerCode
+	    			, address
+	    			, createdate
+	    		FROM address
+	    		ORDER BY address_code
+	    	""";
+	    
+	    try {
+	    	conn = DBConnection.getConn();
+			stmt = conn.prepareStatement(sql);
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Address a = new Address();
+				a.setAddressCode(rs.getInt("addressCode"));
+				a.setCustomerCode(rs.getInt("customerCode"));
+				a.setAddress(rs.getString("address"));
+				a.setCreatedate(rs.getString("createdate"));
+				
+				list.add(a);
+			} 
+	    }finally {
+				try {
+					 if (rs != null) rs.close();
+					 if (stmt != null) stmt.close();
+					 if (conn != null) conn.close();
+				}catch(SQLException e) {					
+					e.printStackTrace();
+				}
+		}
+	    
+	    return list;
+	}
+	
+	// 주소 추가
 	public int insertAddress(Address address) {
 		Connection conn = null;
-		PreparedStatement stmt1 = null;
-		PreparedStatement stmt2 = null;
-		PreparedStatement stmt3 = null;
+		PreparedStatement stmt1 = null; // 개수 조회
+		PreparedStatement stmt2 = null; 
+		PreparedStatement stmt3 = null; // insert
 		ResultSet rs1 = null;
 		
 		String sql1 = """

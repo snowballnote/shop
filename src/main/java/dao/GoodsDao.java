@@ -4,11 +4,98 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import dto.Goods;
 import dto.GoodsImg;
 
 public class GoodsDao {
+	// 직원이 보는 전체 굿즈 리스트 확인
+	public List<Goods> selectGoodsList(int beginRow, int rowPerPage) throws Exception {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<Goods> list = new ArrayList<>();
+
+		String sql = """
+				SELECT
+					goods_code   goodsCode,
+					goods_name   goodsName,
+					goods_price  goodsPrice,
+					point_rate   pointRate,
+					NVL(soldout, 'N') soldout,
+					createdate
+				FROM goods
+				ORDER BY goods_code
+				OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
+			""";
+
+		try {
+			conn = DBConnection.getConn();
+			stmt = conn.prepareStatement(sql);
+
+			stmt.setInt(1, beginRow);
+			stmt.setInt(2, rowPerPage);
+
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Goods g = new Goods();
+				g.setGoodsCode(rs.getInt("goodsCode"));
+				g.setGoodsName(rs.getString("goodsName"));
+				g.setGoodsPrice(rs.getInt("goodsPrice"));
+				g.setPointRate(rs.getDouble("pointRate"));
+				g.setSoldout(rs.getString("soldout"));
+				g.setCreatedate(rs.getString("createdate")); // 기존 방식 유지 (String으로 받는 형태)
+
+				list.add(g);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(stmt != null) stmt.close();
+				if(conn != null) conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return list;
+	}
+
+	// 전체 굿즈 수 (페이지 계산용)
+	public int countGoods() throws Exception {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int total = 0;
+
+		String sql = "SELECT COUNT(*) cnt FROM goods";
+
+		try {
+			conn = DBConnection.getConn();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				total = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(stmt != null) stmt.close();
+				if(conn != null) conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return total;
+	}
+
 	// 상품등록 + 이미지 등록
 	// 반환값은 실패시 false
 	public boolean insertGoodsAndImg(Goods goods, GoodsImg img) throws Exception {
@@ -80,7 +167,11 @@ public class GoodsDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				conn.close();
+				if(rs != null) rs.close();
+				if(stmtSeq != null) stmtSeq.close();
+				if(stmtGoods != null) stmtGoods.close();
+				if(stmtImg != null) stmtImg.close();
+				if(conn != null) conn.close();
 				
 			} catch (SQLException e) {
 				e.printStackTrace();

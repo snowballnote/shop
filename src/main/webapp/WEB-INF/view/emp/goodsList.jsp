@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -48,14 +50,14 @@
 											</a>
 										</td>
 										<td>
-											<c:out value="${g.goodsPrice}" />원
+											<fmt:formatNumber value="${g.goodsPrice}" pattern="#,###" />원
 										</td>
 										<td>
 											<c:out value="${g.pointRate}" />%
 										</td>
 										<td>${g.createdate}</td>
 										<td>
-											<a class="row-action" href="${pageContext.request.contextPath}/emp/modifyGoods?goodsCode=${g.goodsCode}">수정</a>
+											<a class="row-action" href="">수정</a>
 										</td>
 									</tr>
 								</c:forEach>

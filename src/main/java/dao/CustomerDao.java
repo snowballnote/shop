@@ -66,16 +66,17 @@ public class CustomerDao {
 	    List<Customer> list = new ArrayList<>();
 	    
 	    String sql = """
-	    		SELECT 
-		    		customer_code customerCode, 
-		    		customer_id customerId, 
-		    		customer_name customerName, 
-		    		customer_phone customerPhone, 
-		    		point, createdate
-				FROM customer
-				ORDER BY customer_code
-				OFFSET ? ROWS FETCH NEXT ? ROWS ONLY			
-	    	""";
+	            SELECT
+	                  customer_code customerCode
+	                , customer_id customerId
+	                , customer_name customerName
+	                , customer_phone customerPhone
+	                , point
+	                , createdate 
+	            FROM customer
+	            ORDER BY customer_code
+	            OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
+	        """;
 	    
 	    // JDBC connection의 기본 Commit설정값 auto commit = true : false 변경 후 transaction 적용
 	    try {
@@ -102,12 +103,12 @@ public class CustomerDao {
 	    	e.printStackTrace();	
 	    }finally {
 	    	try {
-	    		rs.close();
-		    	stmt.close();
-		    	conn.close();
-		    }catch(SQLException e1) {
-	    	e1.printStackTrace();	
-		    }
+				 if (rs != null) rs.close();
+				 if (stmt != null) stmt.close();
+				 if (conn != null) conn.close();
+			}catch(SQLException e) {					
+				e.printStackTrace();
+			}
 	    }
 	 	return list;
 	}
@@ -133,11 +134,11 @@ public class CustomerDao {
 			e.printStackTrace();
 		}finally {
 			try {
-				rs.close();
-				stmt.close();
-				conn.close();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
+				 if (rs != null) rs.close();
+				 if (stmt != null) stmt.close();
+				 if (conn != null) conn.close();
+			}catch(SQLException e) {					
+				e.printStackTrace();
 			}
 		}
 		return total;
@@ -152,38 +153,45 @@ public class CustomerDao {
 		
 		String sql = """
 				SELECT 
-					customer_code customerCode,
-	                customer_id customerId,
-	                customer_pw customerPw,
-	                customer_name customerName,
-	                customer_phone customerPhone,
-	                point,
-	                createdate
+					customer_code customerCode
+	                , customer_id customerId
+	                , customer_pw customerPw
+	                , customer_name customerName
+	                , customer_phone customerPhone
+	                , point
+	                , createdate 
 	            FROM customer
 	            WHERE customer_id = ? AND customer_pw = ?
 	        """;
 		
-		conn = DBConnection.getConn();
-		stmt = conn.prepareStatement(sql);
-		stmt.setString(1, paramC.getCustomerId());
-		stmt.setString(2, paramC.getCustomerPw());
-		
-		rs = stmt.executeQuery();
-		if (rs.next()) {
-			c = new Customer();
-			c.setCustomerCode(rs.getInt("customerCode"));
-            c.setCustomerId(rs.getString("customerId"));
-            c.setCustomerName(rs.getString("customerName"));
-            c.setCustomerPhone(rs.getString("customerPhone"));
-            c.setPoint(rs.getInt("point"));
-            c.setCreatedate(rs.getString("createdate"));
-		}
+		try {
+            conn = DBConnection.getConn();
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, paramC.getCustomerId());
+            stmt.setString(2, paramC.getCustomerPw());
 
-		rs.close();
-		stmt.close();
-		conn.close();
-        
-        return c;
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                c = new Customer();
+                c.setCustomerCode(rs.getInt("customerCode"));
+                c.setCustomerId(rs.getString("customerId"));
+                c.setCustomerName(rs.getString("customerName"));
+                c.setCustomerPhone(rs.getString("customerPhone"));
+                c.setPoint(rs.getInt("point"));
+                c.setCreatedate(rs.getString("createdate"));
+
+                return c; // 로그인 성공
+            }
+            return null; // 로그인 실패
+        } finally {
+        	try {
+				 if (rs != null) rs.close();
+				 if (stmt != null) stmt.close();
+				 if (conn != null) conn.close();
+			}catch(SQLException e) {					
+				e.printStackTrace();
+			}
+        }
 	}
 	
 	// 아이디 중복 체크
@@ -194,27 +202,28 @@ public class CustomerDao {
         boolean result = false;
         
         String sql = "SELECT 1 FROM customer WHERE customer_id=?";
-        
-        conn = DBConnection.getConn();
-        stmt = conn.prepareStatement(sql);
-        stmt.setString(1, id);
-        
-        rs = stmt.executeQuery();
-        if(rs.next()) {
-        	result = true; // 중복된 아이디 존재
-        }
-        
-        rs.close();
-        stmt.close();
-        conn.close();
 
-        return result;
+        try {
+            conn = DBConnection.getConn();
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, id);
+            rs = stmt.executeQuery();
+            
+            return rs.next();
+        } finally {
+        	try {
+				 if (rs != null) rs.close();
+				 if (stmt != null) stmt.close();
+				 if (conn != null) conn.close();
+			}catch(SQLException e) {					
+				e.printStackTrace();
+			}
+        }
 	}
 	
 	public int insertCustomer(Customer c) throws Exception {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		int row = 0;
 		
 		String sql = """
 				INSERT INTO customer (
@@ -226,18 +235,18 @@ public class CustomerDao {
 				)
 			""";
 		
-		conn = DBConnection.getConn();
-		stmt = conn.prepareStatement(sql);
-		stmt.setString(1, c.getCustomerId());
-		stmt.setString(2, c.getCustomerPw());
-		stmt.setString(3, c.getCustomerName());
-		stmt.setString(4, c.getCustomerPhone());
-        
-		row = stmt.executeUpdate(); // insert 실행
-		
-		stmt.close();
-		conn.close();
-		
-		return row;
+		try {
+            conn = DBConnection.getConn();
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, c.getCustomerId());
+            stmt.setString(2, c.getCustomerPw());   // 추후 해시 예정
+            stmt.setString(3, c.getCustomerName());
+            stmt.setString(4, c.getCustomerPhone());
+            
+            return stmt.executeUpdate();
+        } finally {
+        	if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+        }
 	}	
 }
