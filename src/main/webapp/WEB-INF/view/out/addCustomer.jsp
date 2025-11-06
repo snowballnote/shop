@@ -5,16 +5,14 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Register | Shop</title>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/recess.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/addCustomer.css?v=20251107">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-
 	<div class="page-center">
 		<div class="login-wrap">
 			<h1 class="login-title">Register</h1>
 
-			<!-- 서버측 메시지 (유효성 실패 등) -->
 			<c:if test="${not empty msg}">
 				<div class="msg" style="display:block;">${msg}</div>
 			</c:if>
@@ -25,7 +23,6 @@
 				autocomplete="off"
 				id="customerForm">
 
-				<!-- 아이디 -->
 				<div class="input-row">
 					<input
 						type="text"
@@ -38,7 +35,6 @@
 				</div>
 				<div id="idMsg" class="msg" style="display:none;"></div>
 
-				<!-- 비밀번호 -->
 				<div class="input-row">
 					<input
 						type="password"
@@ -49,7 +45,6 @@
 						required>
 				</div>
 
-				<!-- 비밀번호 확인 -->
 				<div class="input-row">
 					<input
 						type="password"
@@ -60,7 +55,6 @@
 						required>
 				</div>
 
-				<!-- 이름 -->
 				<div class="input-row">
 					<input
 						type="text"
@@ -73,7 +67,6 @@
 				</div>
 				<div id="nameMsg" class="msg" style="display:none;"></div>
 
-				<!-- 전화번호 -->
 				<div class="input-row">
 					<input
 						type="text"
@@ -86,80 +79,63 @@
 				</div>
 				<div id="phoneMsg" class="msg" style="display:none;"></div>
 
-				<!-- 버튼 -->
-				<div style="margin-top:18px;">
-					<button type="submit" class="btn" id="btnSubmit">Sign Up</button>
-				</div>
+				<button type="submit" class="btn" id="btnSubmit">Sign Up</button>
 			</form>
 
 			<div class="link-row">
 				Already have an account?
-				<a href="${pageContext.request.contextPath}/out/login"><em>Login</em></a>
+				<em><a href="${pageContext.request.contextPath}/out/login">Login</a></em>
 			</div>
 		</div>
 	</div>
 
 	<script>
-	// jQuery 버전: ID blur 시 /IdCk 로 AJAX 중복확인
-	$(function(){
-		const ctx = '${pageContext.request.contextPath}';
+		$(function(){
+			const ctx = '${pageContext.request.contextPath}';
 
-		const $id     = $('#id');
-		const $idMsg  = $('#idMsg');
-		const $name   = $('#name');
-		const $nameMsg= $('#nameMsg');
-		const $phone  = $('#phone');
-		const $phoneMsg = $('#phoneMsg');
+			const $id = $('#id'), $idMsg = $('#idMsg');
+			const $name = $('#name'), $nameMsg = $('#nameMsg');
+			const $phone = $('#phone'), $phoneMsg = $('#phoneMsg');
 
-		const nameReg  = /^[가-힣]{2,}$/;
-		const phoneReg = /^[0-9]{10,11}$/;
+			const nameReg  = /^[가-힣]{2,}$/;
+			const phoneReg = /^[0-9]{10,11}$/;
 
-		function show($el, text){ $el.show().text(text); }
-		function clear($el){ $el.hide().text(''); }
+			function show($el, text){ $el.show().text(text); }
+			function clear($el){ $el.hide().text(''); }
 
-		// --- ID: 입력중 메시지 클리어 ---
-		$id.on('input', function(){ clear($idMsg); });
+			$id.on('input', () => clear($idMsg));
+			$id.on('blur', function(){
+				const v = $.trim($id.val());
+				if (v.length < 4) return show($idMsg, '아이디는 4자 이상이어야 합니다.');
+				$.ajax({
+					url: ctx + '/IdCk',
+					type: 'POST',
+					data: { id: v },
+					dataType: 'json'
+				}).done(function(data){
+					if (!data || data.ok === false) {
+						return show($idMsg, (data && data.msg) ? data.msg : '중복확인 실패');
+					}
+					show($idMsg, data.exists ? '이미 사용 중인 아이디입니다.' : '사용 가능한 아이디입니다.');
+				}).fail(function(){
+					show($idMsg, '네트워크 오류가 발생했습니다.');
+				});
+			});
 
-		// --- ID: blur 시 중복확인 AJAX ---
-		$id.on('blur', function(){
-			const v = $.trim($id.val());
-			if (v.length < 4) {
-				show($idMsg, '아이디는 4자 이상이어야 합니다.');
-				return;
-			}
-			$.ajax({
-				url: ctx + '/IdCk',
-				type: 'POST',
-				data: { id: v },
-				dataType: 'json'
-			}).done(function(data){
-				if (!data || data.ok === false) {
-					show($idMsg, (data && data.msg) ? data.msg : '중복확인 실패');
-					return;
-				}
-				show($idMsg, data.exists ? '이미 사용 중인 아이디입니다.' : '사용 가능한 아이디입니다.');
-			}).fail(function(){
-				show($idMsg, '네트워크 오류가 발생했습니다.');
+			$name.on('input', () => clear($nameMsg));
+			$name.on('blur', function(){
+				const v = $.trim($name.val());
+				if (!nameReg.test(v)) show($nameMsg, '이름은 한글 2자 이상 입력해주세요.');
+				else show($nameMsg, '사용 가능한 이름 형식입니다.');
+			});
+
+			$phone.on('input', () => clear($phoneMsg));
+			$phone.on('blur', function(){
+				const v = $.trim($phone.val());
+				if (!phoneReg.test(v)) show($phoneMsg, '전화번호는 숫자 10~11자리로 입력해주세요.');
+				else show($phoneMsg, '사용 가능한 전화번호 형식입니다.');
 			});
 		});
-
-		// --- 이름: blur 간단 검증 (서버 검증은 반드시 유지) ---
-		$name.on('input', function(){ clear($nameMsg); });
-		$name.on('blur', function(){
-			const v = $.trim($name.val());
-			if (!nameReg.test(v)) show($nameMsg, '이름은 한글 2자 이상 입력해주세요.');
-			else show($nameMsg, '사용 가능한 이름 형식입니다.');
-		});
-
-		// --- 전화: blur 간단 검증 (서버 검증은 반드시 유지) ---
-		$phone.on('input', function(){ clear($phoneMsg); });
-		$phone.on('blur', function(){
-			const v = $.trim($phone.val());
-			if (!phoneReg.test(v)) show($phoneMsg, '전화번호는 숫자 10~11자리로 입력해주세요.');
-			else show($phoneMsg, '사용 가능한 전화번호 형식입니다.');
-		});
-	});
 	</script>
-
 </body>
 </html>

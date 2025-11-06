@@ -3,71 +3,107 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class OrdersDao {
-	
-	public List<Map<String, Object>> selectOrdersList(int startRow, int rowPerPage) throws Exception() {
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-		
+	// 주문 리스트
+	public List<Map<String, Object>> selectOrdersList(int beginRow, int rowPerPage) throws Exception {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
 		
 		String sql = """
-					select o.order_code orderCode
-						, o.goods_code goodsCode
-						, o.customer_code customerCode
-						, o.address_code addressCode
-						, o.order_quantity orderQuantity
-				        , o.order_state orderState
-				        , o.createdate createdate
-				        , g.goods_name goodsName
-				        , g.goods_price goodsPrice
-				        , c.customer_name customerName
-				        , c.customer_phone customerPhone
-				        , a.address address
-					from orders o inner join goods g
-					on o.goods_code = g.goods_code
-					    inner join customer c
-					    on o.customer_code = c.customer_code
-					        inner join address a
-					        on o.address_code = a.address_code
-					order by o.order_code desc
-					OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
-				""";
+				SELECT o.order_code orderCode
+					, o.goods_code goodsCode
+					, o.customer_code customerCode
+					, o.address_code addressCode
+					, o.order_quantity orderQuantity
+			        , o.order_state orderState
+			        , o.createdate createdate
+			        , g.goods_name goodsName
+			        , g.goods_price goodsPrice
+			        , c.customer_name customerName
+			        , c.customer_phone customerPhone
+			        , a.address address
+				FROM orders o INNER JOIN goods g
+				ON o.goods_code = g.goods_code
+				    INNER JOIN customer c
+				    ON o.customer_code = c.customer_code
+				        INNER JOIN address a
+				        ON o.address_code = a.address_code
+				ORDER BY o.order_code DESC
+				OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
+			""";
 		
-		conn = DBConnection.getConn();
-		conn.setAutoCommit(false);
-		stmt.setInt(1, startRow);
-		stmt.setInt(2, rowPerPage);
-		rs = stmt(executeQuery);
-		while(rs.next()) {
-			Map<String, Object> m = new HashMap<String, Object>();
-			m.put("orderCode", rs.getInt("orderCode"));
-			m.put("goodsCode", rs.getInt("orderCode"));
-			m.put("customerCode", rs.getInt("orderCode"));
-			m.put("addressCode", rs.getInt("orderCode"));
-			m.put("orderQuantity", rs.getInt("orderCode"));
-			m.put("orderCode", rs.getInt("orderCode"));
-			m.put("orderState", rs.getInt("orderCode"));
-			m.put("orderCode", rs.getInt("orderCode"));
-			m.put("orderCode", rs.getInt("orderCode"));
-			m.put("orderCode", rs.getInt("orderCode"));
-			m.put("createdate", rs.getInt("orderCode"));
-			
-			m.put("goodsName", rs.getInt("goodsName"));
-			m.put("goodsPrice", rs.getInt("goodsPrice"));
-			m.put("customerCode", rs.getInt("orderCode"));
-			m.put("addressCode", rs.getInt("orderCode"));
-			m.put("customerName", rs.getInt("customerName"));
-			m.put("customerPhone", rs.getInt("customerPhone"));
-			m.put("address", rs.getInt("address"));
-			list.add(m);
-			
+		try {
+			conn = DBConnection.getConn();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, beginRow);
+			stmt.setInt(2, rowPerPage);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				Map<String, Object> m = new HashMap<String, Object>();
+				m.put("orderCode", rs.getInt("orderCode"));
+				m.put("goodsCode", rs.getInt("goodsCode"));
+				m.put("customerCode", rs.getInt("customerCode"));
+				m.put("addressCode", rs.getInt("addressCode"));
+				m.put("orderQuantity", rs.getInt("orderQuantity"));
+				m.put("orderPrice", rs.getInt("orderPrice"));
+				m.put("orderState", rs.getString("orderState"));
+				m.put("createdate", rs.getString("createdate"));
+				m.put("goodsName", rs.getString("goodsName"));
+				m.put("goodsPrice", rs.getInt("goodsPrice"));
+				m.put("customerName", rs.getString("customerName"));
+				m.put("customerPhone", rs.getString("customerPhone"));
+				m.put("address", rs.getString("address"));
+				list.add(m);
+			}
+		}finally {
+			try {
+				 if (rs != null) rs.close();
+				 if (stmt != null) stmt.close();
+				 if (conn != null) conn.close();
+			}catch(SQLException e) {					
+				e.printStackTrace();
+			}
 		}
-		return m;
+		
+		return list;
 	}
 	
+	// 전체 주문 수 (페이지 계산용)
+	public int countOrders() throws Exception{
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int total = 0;
+			
+		String sql = "SELECT COUNT(*) cnt FROM orders";
+			
+		try {
+			conn = DBConnection.getConn();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+				
+			if (rs.next()) {
+				total = rs.getInt("cnt");
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				 if (rs != null) rs.close();
+				 if (stmt != null) stmt.close();
+				 if (conn != null) conn.close();
+			}catch(SQLException e) {					
+				e.printStackTrace();
+			}
+		}
+		return total;
+	}
 }
