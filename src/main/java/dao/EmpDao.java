@@ -63,6 +63,7 @@ public class EmpDao {
 		
 		return row;
 	}
+	
 	// 활성/비활성 업데이트
 	public int updateActive(int empCode, int active) throws Exception {
 		Connection conn = null;

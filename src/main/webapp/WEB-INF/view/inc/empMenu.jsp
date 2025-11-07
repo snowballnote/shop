@@ -77,4 +77,17 @@
 			</a>
 		</li>
 	</ul>
+	
+	<div class="emp-sep"></div>
+	
+	<!-- 공지 사항 -->
+	<div class="emp-menu__title">ETC</div>
+	<ul class="emp-nav">
+		<li>
+			<a href="${pageContext.request.contextPath}/emp/noticeList"
+			   class="${fn:endsWith(pageContext.request.requestURI, '/emp/noticeList') ? 'is-active' : ''}">
+				<span class="emoji">📢</span> 공지 사항
+			</a>
+		</li>
+	</ul>
 </nav>

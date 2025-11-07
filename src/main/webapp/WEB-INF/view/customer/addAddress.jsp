@@ -9,8 +9,10 @@
 </head>
 <body>
 	<h1>addAddress</h1>
+	<!-- 
 	<c:import url="/WEB-INF/view/inc/customerMenu.jsp" />
-	
+	-->
+	 
 	<div>
 		<form method = "post" action="${pageContext.request.contextPath}/customer/addAddress">
 			<div>

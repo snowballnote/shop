@@ -1,0 +1,123 @@
+@charset "UTF-8";
+
+/* 테이블 래퍼 */
+.table-wrap { overflow-x: auto; }
+
+/* 표 기본 */
+.r-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.r-table th,
+.r-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.r-table thead th {
+  background: #fafafa;
+  font-weight: 700;
+}
+
+.r-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.title-cell .link,
+.title-cell .link:visited {
+  color: #111;
+  text-decoration: underline;
+}
+
+/* 비어있을 때 */
+.empty {
+  text-align: center;
+  color: #888;
+  padding: 28px 0;
+}
+
+/* 헤더 버튼 (adminLayout과 톤 맞춤) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  color: #111;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+.btn:hover { background: #f8fafc; }
+
+.btn--dark {
+  border-color: #111;
+  background: #111;
+  color: #fff;
+}
+.btn--dark:hover { background: #333; }
+
+/* 페이징 */
+.pager {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.pager-left,
+.pager-right {
+  display: flex;
+  gap: 8px;
+}
+
+.pager-right {
+  justify-content: flex-end;
+}
+
+.pager-pages {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-btn {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 14px;
+  color: #111;
+  text-decoration: none;
+  line-height: 1;
+}
+.page-btn:hover {
+  background: #f1f5f9;
+}
+
+.page-btn.is-active {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+  cursor: default;
+}
+
+/* 반응형 */
+@media (max-width: 749px) {
+  .r-table th, .r-table td { padding: 10px 12px; }
+  .btn { height: 34px; }
+  .page-btn { padding: 6px 9px; }
+}
+/* 모든 테이블 헤더 중앙 정렬 */
+.r-table th { text-align: center; }

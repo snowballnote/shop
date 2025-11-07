@@ -31,7 +31,7 @@
 				</div>
 
 				<div class="input-row">
-					<input type="text" name="id" id="id" class="input" placeholder="Email or ID">
+					<input type="text" name="id" id="id" class="input" placeholder="ID">
 				</div>
 				<div class="input-row">
 					<input type="password" name="pw" id="pw" class="input" placeholder="Password">

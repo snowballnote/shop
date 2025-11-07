@@ -1,130 +1,161 @@
 @charset "UTF-8";
 
-/* ----- Tokens (RECESS 느낌) ----- */
-:root{
-  --page-width: 966px;
-  --black: #201f1f;
-  --muted: #6b7280;
-  --border: #e5e7eb;
+/* Base */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+  color: #201f1f;
+  background: #fffefe;
 }
 
-/* ----- Base ----- */
-*{ box-sizing: border-box; }
-html,body{
-  margin:0; padding:0;
-  color:var(--black);
-  background:#fff;
-  font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;
-  line-height:1.6;
+/* Layout */
+.cx-header {
+  display: grid;
+  place-items: center;
+  padding: 48px 16px 24px;
+}
+.cx-header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: .02em;
 }
 
-/* ----- Header (상단 중앙 타이틀) ----- */
-.cx-header{
-  max-width: var(--page-width);
-  margin: 48px auto 20px;
-  padding: 0 20px;
-  display:flex; justify-content:center;
-}
-.cx-header h1{
-  margin:0;
-  font-size:28px;
-  font-weight:900;
-  letter-spacing:.02em;
-}
-
-/* ----- Main wrapper (중앙 정렬, 고정 폭) ----- */
-.cx-main{
-  max-width: var(--page-width);
+.cx-main {
+  width: 100%;
+  max-width: 966px;
   margin: 0 auto;
-  padding: 0 20px 64px;
+  padding: 0 16px 64px;
 }
 
-/* ----- Section 공통 ----- */
-.cx-section{ margin: 28px 0 40px; }
-.cx-subtitle{
-  margin:0 0 16px;
-  font-size:18px;
-  font-weight:800;
+.cx-section + .cx-section {
+  margin-top: 36px;
 }
 
-/* ----- Account details ----- */
-.cx-account{ }
-.cx-line{ margin: 0 0 6px; }
-.cx-links{
-  display:flex; flex-wrap:wrap;
-  gap:14px; margin-top:14px;
-}
-.cx-link{
-  font-weight:700;
-  text-decoration:underline;
-  text-underline-offset:3px;
+.cx-subtitle {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 0 0 14px;
+  letter-spacing: .02em;
 }
 
-/* ----- Order table / empty text ----- */
-.cx-empty{ color:var(--muted); }
-.cx-tablewrap{ overflow-x:auto; }
-.cx-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:14px;
+/* Account box */
+.cx-account {
+  border: 1px solid #201f1f;
+  border-radius: 18px;
+  padding: 18px 18px 6px;
+  background: #fff;
 }
-.cx-table th,
-.cx-table td{
-  padding:10px 12px;
-  border-bottom:1px solid var(--border);
-  text-align:left;
+.cx-welcome {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  opacity: .7;
+  margin-bottom: 6px;
 }
-.cx-table th{
-  background:#fafafa;
-  font-weight:700;
+.cx-line {
+  margin: 0 0 6px;
+  font-size: 14px;
 }
-.cx-table tr:hover{ background:#f8fafc; }
+.cx-point strong { font-weight: 800; }
 
-.cx-underline{
-  text-decoration:underline;
-  text-underline-offset:3px;
-}
-
-/* ----- Footer ----- */
-.cx-footer{
-  max-width: var(--page-width);
-  margin: 0 auto 56px;
-  padding: 0 20px;
-  color:var(--muted);
-  font-size:12px;
-}
-
-/* ----- Responsive (모바일 여백만 조정) ----- */
-@media (max-width: 480px){
-  .cx-header{ margin-top:36px; }
-  .cx-header h1{ font-size:24px; }
-}
-/* 링크 세로 정렬 */
+/* Links (stacked) */
 .cx-links {
   display: flex;
-  flex-direction: column; /* 세로로 쌓기 */
-  gap: 8px;               /* 링크 간격 */
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
 }
 
-.cx-link {
-  display: inline-block;  /* 줄 전체를 차지하지 않게 깔끔 */
+.cx-link,
+.cx-link:visited {
+  color: #201f1f;            /* 보라색 방지 */
+  text-decoration: underline;
+  font-size: 14px;
 }
-/* 링크 보라색(visited) 방지 + 기본 컬러 고정 */
-.cx-link {
-  color: #111;
-  text-decoration: none;
+.cx-link:hover { opacity: .7; }
+
+.cx-count {
+  margin-left: 4px;
+  font-weight: 700;
 }
 
-.cx-link:visited,
-.cx-link:hover,
-.cx-link:active,
-.cx-link:focus {
-  color: #111;            /* 항상 같은 색 */
-  text-decoration: underline; /* 호버 시만 밑줄(원하면 제거 가능) */
+/* Sub link under YOUR ADDRESSES */
+.cx-sublink,
+.cx-sublink:visited {
+  display: inline-block;
+  margin: 2px 0 6px 14px;    /* 살짝 들여쓰기로 계층감 */
+  font-size: 13px;
+  color: #201f1f;            /* 보라색 방지 */
+  text-decoration: underline;
+  opacity: .85;
+}
+.cx-sublink:hover { opacity: .65; }
+
+/* Table */
+.cx-tablewrap { overflow-x: auto; }
+.cx-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.cx-table th,
+.cx-table td {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 10px 12px;
+  text-align: left;
+}
+.cx-table th {
+  background: #fafafa;
+  font-weight: 700;
+}
+.cx-underline,
+.cx-underline:visited {
+  color: #201f1f;            /* 방문색 방지 */
+  text-decoration: underline;
 }
 
-/* 모바일 탭 하이라이트 제거 (옵션) */
-.cx-link {
-  -webkit-tap-highlight-color: transparent;
+/* Empty */
+.cx-empty {
+  margin: 0;
+  color: #888;
+  font-size: 14px;
+}
+
+/* Footer */
+.cx-footer {
+  display: grid;
+  place-items: center;
+  padding: 36px 16px 48px;
+  color: #666;
+  font-size: 12px;
+}
+
+/* Responsive */
+@media (max-width: 749px) {
+  .cx-header { padding-top: 36px; }
+  .cx-header h1 { font-size: 22px; }
+}
+/* --- visited 보라색 방지 (붙여넣기) --- */
+.cx-links a,
+.cx-links a:link,
+.cx-links a:visited,
+.cx-add-link,
+.cx-add-link:link,
+.cx-add-link:visited,
+.underline-link,
+.underline-link:link,
+.underline-link:visited {
+  color: #201f1f !important;   /* 필요시 !important로 강제 */
+  text-decoration: underline;  /* 원하면 제거 가능 */
+}
+
+/* 호버 효과(선택) */
+.cx-links a:hover,
+.cx-add-link:hover,
+.underline-link:hover {
+  opacity: .7;
 }
 

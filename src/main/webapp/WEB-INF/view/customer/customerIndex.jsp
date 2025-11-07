@@ -31,12 +31,21 @@
         <h2 class="cx-subtitle">Account Details</h2>
 
         <div class="cx-account">
-        	WELCOME
-          	<p class="cx-line">${loginCustomer.customerName}</p>
-			<p class="cx-line cx-point">Points: ${loginCustomer.point}</p>
+          <div class="cx-welcome">WELCOME</div>
+          <p class="cx-line">${loginCustomer.customerName}</p>
+          <p class="cx-line cx-point">Points: <strong><fmt:formatNumber value="${loginCustomer.point}" /></strong></p>
 
           <nav class="cx-links">
-            <a class="cx-link" href="${pageContext.request.contextPath}/customer/addressList">YOUR ADDRESSES</a>
+            <a class="cx-link" href="${pageContext.request.contextPath}/customer/addressList">
+              YOUR ADDRESSES
+              <c:if test="${not empty addressCount}">
+                <span class="cx-count">(${addressCount})</span>
+              </c:if>
+            </a>
+            <a class="cx-sublink" href="${pageContext.request.contextPath}/customer/addAddress">
+              ADD ADDRESS
+            </a>
+
             <a class="cx-link" href="${pageContext.request.contextPath}/customer/wishlist">YOUR WISHLIST</a>
             <a class="cx-link" href="${pageContext.request.contextPath}/customer/customerLogout">LOG OUT</a>
           </nav>
@@ -83,7 +92,7 @@
       </section>
     </main>
 
-    <!-- 푸터 (필요 시 내용 추가) -->
+    <!-- 푸터 -->
     <footer class="cx-footer">
       <small>© <fmt:formatDate value="<%= new java.util.Date() %>" pattern="yyyy" /> Shop</small>
     </footer>

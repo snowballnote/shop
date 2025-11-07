@@ -23,10 +23,10 @@ public class AddEmpController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 파라미터 수집 + 정규화
-		String id		= trim(request.getParameter("empId"));
-		String pw		= trim(request.getParameter("empPw"));
-		String pw2		= trim(request.getParameter("empPw2"));
-		String name		= trim(request.getParameter("empName"));
+		String id		= request.getParameter("empId");
+		String pw		= request.getParameter("empPw");
+		String pw2		= request.getParameter("empPw2");
+		String name		= request.getParameter("empName");
 		String activeP	= request.getParameter("active"); // "1" or "0"
 		int active		= "0".equals(activeP) ? 0 : 1;
 

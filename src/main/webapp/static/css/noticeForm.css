@@ -1,0 +1,118 @@
+/* /static/css/noticeForm.css */
+@charset "UTF-8";
+
+/* 섹션 컨테이너 */
+.nf-section {
+  padding: 20px 0 8px;
+}
+
+/* 폼 래퍼 */
+.nf-form {
+  max-width: 640px;      /* 폼 폭 */
+  width: 100%;
+}
+
+/* 각 필드 블록 */
+.form-row {
+  display: flex;
+  flex-direction: column; /* 레이블을 위로 */
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+/* 레이블 */
+.form-row label {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  color: #201f1f;
+}
+
+/* 입력/텍스트영역 공통 */
+.nf-form input[type="text"],
+.nf-form textarea {
+  width: 100%;
+  border: 1.2px solid #201f1f;
+  border-radius: 12px;
+  background: #fff;
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+}
+
+/* 포커스 상태 */
+.nf-form input[type="text"]:focus,
+.nf-form textarea:focus {
+  border-color: #111;
+}
+
+/* 텍스트영역 기본 높이 */
+.nf-form textarea {
+  min-height: 180px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* 메시지 */
+.nf-msg {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border: 1px solid #f0caca;
+  background: #fff5f5;
+  color: #b00020;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+/* 액션 버튼 영역 */
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+/* 버튼 공통(관리자 공통 버튼 스타일과 조화) */
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #111;
+}
+
+.btn:hover { background: #f7f7f7; }
+
+/* 진한 버튼 */
+.btn.btn--dark {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+.btn.btn--dark:hover { opacity: .9; }
+
+/* 링크형 보조 버튼 */
+.page-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #111;
+  background: #fff;
+}
+.page-btn:hover { background: #f7f7f7; }
+
+/* 반응형 */
+@media (max-width: 749px) {
+  .nf-form { max-width: 100%; }
+}
