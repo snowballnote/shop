@@ -7,7 +7,7 @@
 	<title>공지 등록 | Shop Admin</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/adminLayout.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/empMenu.css" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/noticeForm.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/addNoticeForm.css" /> <%-- 새 스타일 적용 --%>
 </head>
 <body>
 	<div class="admin-layout">
@@ -16,37 +16,34 @@
 
 		<!-- 오른쪽 콘텐츠 -->
 		<main class="admin-content">
-			<header class="emp-header">
-				<h1 class="page-title">공지 등록</h1>
-				<a class="btn btn--ghost" href="${pageContext.request.contextPath}/emp/noticeList">목록</a>
-			</header>
+			<div class="page-center">
+				<div class="form-wrap">
+					<h2 class="form-title">공지 등록</h2>
 
-			<section class="nf-section">
-				<!-- 서버 메시지 -->
-				<c:if test="${not empty msg}">
-					<div class="nf-msg">${msg}</div>
-				</c:if>
+					<!-- 서버 메시지 -->
+					<c:if test="${not empty msg}">
+						<div class="msg">${msg}</div>
+					</c:if>
 
-				<form method="post" action="${pageContext.request.contextPath}/emp/addNotice" class="nf-form" autocomplete="off">
-					<div class="form-row">
-						<label for="noticeTitle">제목</label>
-						<input type="text" id="noticeTitle" name="noticeTitle" required />
-					</div>
+					<form method="post" action="${pageContext.request.contextPath}/emp/addNotice" autocomplete="off">
+						<div class="input-row">
+							<input type="text" name="noticeTitle" class="input" placeholder="제목 (Title)" required />
+						</div>
 
-					<div class="form-row">
-						<label for="noticeContent">내용</label>
-						<textarea id="noticeContent" name="noticeContent" rows="10" required></textarea>
-					</div>
+						<div class="input-row">
+							<textarea name="noticeContent" class="textarea" placeholder="내용 (Content)" required></textarea>
+						</div>
 
-					<!-- 현재는 hidden으로 받되, 추후 세션 사용으로 변경 권장 -->
-					<input type="hidden" name="empCode" value="${loginEmp.empCode}" />
+						<input type="hidden" name="empCode" value="${loginEmp.empCode}" />
 
-					<div class="form-actions">
-						<button type="submit" class="btn btn--dark">등록</button>
-						<a class="page-btn" href="${pageContext.request.contextPath}/emp/noticeList">목록</a>
-					</div>
-				</form>
-			</section>
+						<button type="submit" class="btn">등록</button>
+
+						<div class="link-row">
+							<a href="${pageContext.request.contextPath}/emp/noticeList">← Back to List</a>
+						</div>
+					</form>
+				</div>
+			</div>
 		</main>
 	</div>
 </body>

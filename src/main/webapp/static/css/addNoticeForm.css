@@ -52,7 +52,10 @@ form {
 	width: 100%;
 	max-width: 520px;
 }
-.input-row { margin-bottom: 10px; }
+.input-row {
+	margin-bottom: 14px;
+	width: 100%;
+}
 
 /* Inputs */
 .input {
@@ -65,7 +68,26 @@ form {
 	background: #fff;
 	font-size: 14px;
 }
-.input:focus { border-color: #201f1f; }
+.input:focus {
+	border-color: #201f1f;
+}
+
+/* Textarea */
+.textarea {
+	width: 100%;
+	height: 120px;
+	padding: 10px 14px;
+	border: 1.2px solid #201f1f;
+	border-radius: 18px;
+	outline: none;
+	background: #fff;
+	font-size: 14px;
+	resize: none;
+	line-height: 1.4;
+}
+.textarea:focus {
+	border-color: #201f1f;
+}
 
 /* Button */
 .btn {
@@ -82,16 +104,28 @@ form {
 	text-transform: uppercase;
 	cursor: pointer;
 }
-.btn:hover { background: #f7f7f7; }
+.btn:hover {
+	background: #f7f7f7;
+}
 
 /* Links */
 .link-row {
 	margin-top: 14px;
 	font-size: 13px;
+  	text-align: center; /* 👉 가운데 정렬 핵심 */
 }
 .link-row a,
 .link-row a:visited {
-	color: #201f1f;     /* 방문색 보라색 방지 */
+	color: #201f1f;
 	text-decoration: underline;
 }
-.link-row a:hover { opacity: .7; }
+.link-row a:hover {
+	opacity: .7;
+}
+
+/* Mobile */
+@media (max-width: 749px) {
+	.page-center {
+		padding-top: 40px;
+	}
+}

@@ -28,13 +28,13 @@
 	<ul class="emp-nav">
 		<li>
 			<a href="${pageContext.request.contextPath}/emp/empList"
-			   class="${fn:endsWith(pageContext.request.requestURI, '/emp/empList') ? 'is-active' : ''}">
+			   class="${fn:contains(pageContext.request.requestURI, '/emp/empList') ? 'is-active' : ''}">
 				<span class="emoji">👥</span> 직원 목록
 			</a>
 		</li>
 		<li>
 			<a href="${pageContext.request.contextPath}/emp/addEmp"
-			   class="${fn:endsWith(pageContext.request.requestURI, '/emp/addEmp') ? 'is-active' : ''}">
+			   class="${fn:contains(pageContext.request.requestURI, '/emp/addEmp') ? 'is-active' : ''}">
 				<span class="emoji">➕</span> 직원 추가
 			</a>
 		</li>
@@ -47,7 +47,7 @@
 	<ul class="emp-nav">
 		<li>
 			<a href="${pageContext.request.contextPath}/emp/customerList"
-			   class="${fn:endsWith(pageContext.request.requestURI, '/emp/customerList') ? 'is-active' : ''}">
+			   class="${fn:contains(pageContext.request.requestURI, '/emp/customerList') ? 'is-active' : ''}">
 				<span class="emoji">🙋‍♀️</span> 고객 목록
 			</a>
 		</li>
@@ -66,13 +66,13 @@
 	<ul class="emp-nav">
 		<li>
 			<a href="${pageContext.request.contextPath}/emp/goodsList"
-			   class="${fn:endsWith(pageContext.request.requestURI, '/emp/goodsList') ? 'is-active' : ''}">
+			   class="${fn:contains(pageContext.request.requestURI, '/emp/goodsList') ? 'is-active' : ''}">
 				<span class="emoji">🛍️</span> 상품 목록
 			</a>
 		</li>
 		<li>
 			<a href="${pageContext.request.contextPath}/emp/addGoods"
-			   class="${fn:endsWith(pageContext.request.requestURI, '/emp/addGoods') ? 'is-active' : ''}">
+			   class="${fn:contains(pageContext.request.requestURI, '/emp/addGoods') ? 'is-active' : ''}">
 				<span class="emoji">📦</span> 상품 등록
 			</a>
 		</li>
@@ -85,7 +85,7 @@
 	<ul class="emp-nav">
 		<li>
 			<a href="${pageContext.request.contextPath}/emp/noticeList"
-			   class="${fn:endsWith(pageContext.request.requestURI, '/emp/noticeList') ? 'is-active' : ''}">
+			   class="${fn:contains(pageContext.request.requestURI, '/emp/noticeList') ? 'is-active' : ''}">
 				<span class="emoji">📢</span> 공지 사항
 			</a>
 		</li>

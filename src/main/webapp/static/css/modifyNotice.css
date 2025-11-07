@@ -1,0 +1,85 @@
+/* modifyNotice.jsp 전용 */
+
+.form {
+	display: grid;
+	gap: 16px;
+	max-width: 880px;
+}
+
+.input-row {
+	display: grid;
+	gap: 8px;
+}
+
+.label-strong {
+	font-weight: 700; /* 제목/작성자 굵게 */
+}
+
+.readonly-box {
+	padding: 10px 12px;
+	background: #f7f7f9;
+	border: 1px solid #e5e7eb;
+	border-radius: 8px;
+}
+
+#noticeTitle {
+	padding: 10px 12px;
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	outline: none;
+}
+
+#noticeTitle:focus {
+	border-color: #111;
+}
+
+#noticeContent {
+	width: 100%;
+	min-height: 240px;
+	padding: 12px;
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	resize: vertical;
+	line-height: 1.6;
+	outline: none;
+}
+
+#noticeContent:focus {
+	border-color: #111;
+}
+
+.meta {
+	color: #6b7280;
+	font-size: 13px;
+}
+
+.btn-row {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+
+.btn {
+	display: inline-block;
+	padding: 10px 14px;
+	border-radius: 10px;
+	border: 1px solid #111;
+	background: #111;
+	color: #fff;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.btn--ghost {
+	background: #fff;
+	color: #111;
+}
+
+.link-row {
+	margin-top: 8px;
+}
+
+.link-row a {
+	color: #111;
+	text-decoration: underline;
+}

@@ -1,49 +1,53 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-	<meta charset="UTF-8">
-	<title>상품 등록 | Shop Admin</title>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/empMenu.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/addGoods.css">
+  <meta charset="UTF-8" />
+  <title>상품 등록 | Shop Admin</title>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/adminLayout.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/empMenu.css" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/addGoods.css" />
 </head>
 <body>
-	<div class="emp-layout">
-		<!-- 사이드 메뉴 -->
-		<c:import url="/WEB-INF/view/inc/empMenu.jsp" />
+  <div class="admin-layout">
+    
+    <!-- 왼쪽 메뉴 -->
+    <c:import url="/WEB-INF/view/inc/empMenu.jsp" />
 
-		<!-- 메인 콘텐츠 -->
-		<main class="emp-content">
-			<h1>상품 등록</h1>
+    <!-- 오른쪽 콘텐츠 -->
+    <main class="admin-content">
+      <div class="page-center">
+        <div class="form-wrap">
+          <h2 class="form-title">상품 등록</h2>
 
-			<form method="post"
-				  action="${pageContext.request.contextPath}/emp/addGoods"
-				  enctype="multipart/form-data"
-				  class="emp-form">
+          <!-- 서버 메시지 -->
+          <c:if test="${not empty msg}">
+            <div class="msg">${msg}</div>
+          </c:if>
 
-				<label>상품명</label>
-				<input type="text" name="goodsName" required maxlength="100">
+          <form method="post" action="${pageContext.request.contextPath}/emp/addGoods" autocomplete="off">
+            <div class="input-row">
+              <input type="text" name="goodsName" class="input" placeholder="상품명" required />
+            </div>
 
-				<label>상품 가격</label>
-				<input type="number" name="goodsPrice" required min="0" step="1">
+            <div class="input-row">
+              <input type="number" name="goodsPrice" class="input" placeholder="가격 (숫자만)" required />
+            </div>
 
-				<label>적립률 (%)</label>
-				<input type="number" name="pointRate" required min="0" step="0.1">
+            <div class="input-row">
+              <textarea name="goodsDesc" class="textarea" placeholder="상품 설명 (선택)"></textarea>
+            </div>
 
-				<label>상품 이미지</label>
-				<input type="file" name="goodsImg" accept=".png,.jpg,.jpeg,.gif" required>
+            <button type="submit" class="btn">등록</button>
 
-				<p class="hint">png / jpg / gif 형식만 가능합니다.</p>
-
-				<button type="submit" class="btn-primary">상품 등록</button>
-			</form>
-
-			<c:if test="${not empty msg}">
-				<div class="form-msg">${msg}</div>
-			</c:if>
-		</main>
-	</div>
+            <div class="link-row">
+              <a href="${pageContext.request.contextPath}/emp/goodsList">← 목록으로</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
 </body>
 </html>

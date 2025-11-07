@@ -48,13 +48,9 @@ public class NoticeDao {
 	    } catch(SQLException e1) {
 	    	e1.printStackTrace();	
 	    }finally {
-	    	try {
-				 if (rs != null) rs.close();
-				 if (stmt != null) stmt.close();
-				 if (conn != null) conn.close();
-			}catch(SQLException e2) {					
-				e2.printStackTrace();
-			}
+	    	if (rs != null) rs.close();
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
 	    }
 	 	return list;
 	}
@@ -80,8 +76,7 @@ public class NoticeDao {
 				count = rs.getInt(1);
 			}
 		} catch(Exception e1) {
-			// conn.rollback();
-			e1.printStackTrace(); // 콘솔에 
+			e1.printStackTrace();
 		}finally {
 			try {
 				if(rs != null) rs.close();
@@ -91,6 +86,7 @@ public class NoticeDao {
 				e2.printStackTrace();
 			}
 		}
+		
 		return count;
 	}
 
@@ -128,6 +124,7 @@ public class NoticeDao {
 				e2.printStackTrace();
 			}
 		}
+		
 		return row;
 	}
 	
@@ -137,15 +134,34 @@ public class NoticeDao {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		
 		String sql = """
-				
-			
+				SELECT
+					notice_code noticeCode
+	                , notice_title noticeTitle
+	                , notice_content noticeContent
+	                , emp_code empCode
+	                , createdate
+	            FROM notice
+	            WHERE notice_code=?
 			""";
 		
 		try {
+			conn = DBConnection.getConn();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, noticeCode);
 			
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				resultNotice = new Notice();
+				resultNotice.setNoticeCode(rs.getInt("noticeCode"));
+				resultNotice.setNoticeTitle(rs.getString("noticeTitle"));
+				resultNotice.setNoticeContent(rs.getString("noticeContent"));
+				resultNotice.setEmpCode(rs.getInt("empCode"));
+				resultNotice.setCreatedate(rs.getString("createdate"));
+			}	
 		} catch(Exception e1) {
-			// conn.rollback();
 			e1.printStackTrace();
 		}finally {
 			try {
@@ -156,6 +172,7 @@ public class NoticeDao {
 				e2.printStackTrace();
 			}
 		}
+		
 		return resultNotice;
 	}
 	
@@ -185,22 +202,36 @@ public class NoticeDao {
 		return row;
 	}
 	
-	// /emp/updateNotice
+	// /emp/modifyNotice
 	public int updateNotice(Notice n) {
 		int row = 0;
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		String sql = """
-				
-			
+				UPDATE notice
+				SET notice_title=?
+					, notice_content=?
+					, updatedate=NOW()
+				WHERE notice_code=?
 			""";
 		
 		try {
-			
+			conn = DBConnection.getConn();
+	        conn.setAutoCommit(false);
+
+	        stmt = conn.prepareStatement(sql);
+	        stmt.setString(1, n.getNoticeTitle());
+	        stmt.setString(2, n.getNoticeContent());
+	        stmt.setInt(3, n.getNoticeCode());
+	        
+	        row = stmt.executeUpdate(); // 1=성공, 0=권한 불일치 또는 없음
+	        conn.commit();		
 		} catch(Exception e1) {
-			// conn.rollback();
-			e1.printStackTrace();
-		}finally {
+			try {
+	            if (conn != null) conn.rollback();   // 실패 시 롤백
+	        } catch (SQLException ignore) {}
+	        e1.printStackTrace();
+		} finally {
 			try {
 				 if (stmt != null) stmt.close();
 				 if (conn != null) conn.close();

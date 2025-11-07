@@ -7,8 +7,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Goods List | Shop Admin</title>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/empMenu.css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/goodsList.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/adminLayout.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/empMenu.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/goodsList.css" />
 </head>
 <body>
 	<div class="emp-layout">
