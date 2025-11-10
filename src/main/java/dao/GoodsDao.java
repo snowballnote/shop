@@ -5,29 +5,55 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dto.Goods;
 import dto.GoodsImg;
 
 public class GoodsDao {
+	public List<Map<String, Object>> selectBestGoodsList() throws Exception{
+		List<Map<String, Object>> list = new ArrayList<>();
+		
+		String sql = """
+				SELECT 
+				        gi.filename filename
+				        , g.goods_code goodsCode
+				        , g.goods_name goodsName
+				        , g.goods_price goodsPrice
+				FROM
+				goods g INNER JOIN goods_img gi
+				ON g.goods_code = gi.goods_code
+				    INNER JOIN(SELECT goods_code, COUNT(*) FROM orders
+				                        group by goods_code
+				                        order by count(*) desc
+				                        offset 0 rows fetch next 5 rows only) t
+				    on g.goods_code = t.goods_code
+			""";
+		
+		
+		return list;
+		
+	}
+	
 	// 직원이 보는 전체 굿즈 리스트 확인
-	public List<Goods> selectGoodsList(int beginRow, int rowPerPage) throws Exception {
+	public List<Map<String, Object>> selectGoodsList(int beginRow, int rowPerPage) throws Exception {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		List<Goods> list = new ArrayList<>();
+		List<Map<String, Object>> list = new ArrayList<>();
 
 		String sql = """
 				SELECT
-					goods_code   goodsCode,
-					goods_name   goodsName,
-					goods_price  goodsPrice,
-					point_rate   pointRate,
-					NVL(soldout, 'N') soldout,
-					createdate
-				FROM goods
-				ORDER BY goods_code
+					gi.filename filename
+					, g.goods_code   goodsCode
+					, g.goods_name   goodsName
+					, g.goods_price  goodsPrice
+				FROM goods g INNER JOIN goods_img gi
+				ON g.goods_code = gi_goods_code
+				WHERE g.soldout IS NULL
+				ORDER BY goods_code DESC
 				OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
 			""";
 
@@ -41,15 +67,13 @@ public class GoodsDao {
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				Goods g = new Goods();
-				g.setGoodsCode(rs.getInt("goodsCode"));
-				g.setGoodsName(rs.getString("goodsName"));
-				g.setGoodsPrice(rs.getInt("goodsPrice"));
-				g.setPointRate(rs.getDouble("pointRate"));
-				g.setSoldout(rs.getString("soldout"));
-				g.setCreatedate(rs.getString("createdate")); // 기존 방식 유지 (String으로 받는 형태)
-
-				list.add(g);
+				Map<String, Object> m = new HashMap<>();
+				m.put("filename", rs.getString("filename"));
+				m.put("goodsCode", rs.getInt("goodsCode"));
+				m.put("goodsName", rs.getString("goodsName"));
+				m.put("goodsPrice", rs.getInt("goodsPrice"));
+				
+				list.add(m);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

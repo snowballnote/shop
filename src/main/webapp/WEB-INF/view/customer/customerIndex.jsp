@@ -24,72 +24,47 @@
       <h1>My Account</h1>
     </header>
 
-    <!-- 중앙 컨텐츠: 966px 고정폭, 화면 정중앙 정렬 -->
-    <main class="cx-main">
-      <!-- Account Details -->
-      <section class="cx-section">
-        <h2 class="cx-subtitle">Account Details</h2>
-
-        <div class="cx-account">
-          <div class="cx-welcome">WELCOME</div>
-          <p class="cx-line">${loginCustomer.customerName}</p>
-          <p class="cx-line cx-point">Points: <strong><fmt:formatNumber value="${loginCustomer.point}" /></strong></p>
-
-          <nav class="cx-links">
-            <a class="cx-link" href="${pageContext.request.contextPath}/customer/addressList">
-              YOUR ADDRESSES
-              <c:if test="${not empty addressCount}">
-                <span class="cx-count">(${addressCount})</span>
-              </c:if>
-            </a>
-            <a class="cx-sublink" href="${pageContext.request.contextPath}/customer/addAddress">
-              ADD ADDRESS
-            </a>
-
-            <a class="cx-link" href="${pageContext.request.contextPath}/customer/wishlist">YOUR WISHLIST</a>
-            <a class="cx-link" href="${pageContext.request.contextPath}/customer/customerLogout">LOG OUT</a>
-          </nav>
-        </div>
-      </section>
-
-      <!-- Order History -->
-      <section class="cx-section">
-        <h2 class="cx-subtitle">Order History</h2>
-
-        <c:choose>
-          <c:when test="${empty recentOrders}">
-            <p class="cx-empty">You haven't placed any orders yet.</p>
-          </c:when>
-          <c:otherwise>
-            <div class="cx-tablewrap">
-              <table class="cx-table">
-                <thead>
-                  <tr>
-                    <th>Order #</th>
-                    <th>Date</th>
-                    <th>Total</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <c:forEach var="o" items="${recentOrders}">
-                    <tr>
-                      <td>
-                        <a class="cx-underline" href="${pageContext.request.contextPath}/order/detail?orderCode=${o.orderCode}">
-                          ${o.orderCode}
-                        </a>
-                      </td>
-                      <td><fmt:formatDate value="${o.createdate}" pattern="yyyy.MM.dd" /></td>
-                      <td><fmt:formatNumber value="${o.totalPrice}" type="number" /></td>
-                      <td>${o.orderState}</td>
-                    </tr>
-                  </c:forEach>
-                </tbody>
-              </table>
-            </div>
-          </c:otherwise>
-        </c:choose>
-      </section>
+    <main>
+    	<div>
+    		님 반갑습니다.
+    		(point)
+    	</div>
+    	
+    	<h2> 베스트 상품 목록</h2>
+    	<!-- 베스트 : 가장 많이 주문(주문완료)된 상품 5개 -->
+    	<div>
+    		베스트상품5개
+    		${bestGoodsList}
+    	</div>
+    	
+    	<hr>
+    	
+    	<h2>상품목록</h2>
+    	<div>
+    		<table border="1" width="100%">
+			    <c:forEach var="m" items="${goodsList}" varStatus="state">
+			        <c:if test="${state.index % 5 == 0}">
+			            <tr>
+			        </c:if>
+			
+			        <td align="center" valign="top">
+			            <!-- 이미지 출력 -->
+			            <div>
+			                <img src="${pageContext.request.contextPath}/upload/${m.filename}" width="100" height="100" alt="상품 이미지">
+			            </div>
+			            <!-- 상품명 및 가격 -->
+			            <div>
+			                ${m.goodsName}<br>
+			                ${m.goodsPrice}원
+			            </div>
+			        </td>
+			
+			        <c:if test="${state.index % 5 == 4 || state.last}">
+			            </tr>
+			        </c:if>
+			    </c:forEach>
+			</table>
+    	</div>
     </main>
 
     <!-- 푸터 -->
