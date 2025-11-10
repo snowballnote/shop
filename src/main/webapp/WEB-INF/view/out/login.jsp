@@ -19,7 +19,7 @@
 			<form id="loginForm" method="post" action="${pageContext.request.contextPath}/out/login" autocomplete="off">
 				<div class="role-row" style="justify-content:center; margin-bottom:18px;">
 					<label>
-						<input type="radio" name="customerOrEmpSel" id="selCustomer" value="customer"
+						<input type="radio" name="customerOrEmpSel" id="selCustomer" value="customer"  checked
 							<c:if test="${empty param.customerOrEmpSel or param.customerOrEmpSel == 'customer'}">checked</c:if>>
 						Customer
 					</label>
@@ -31,10 +31,10 @@
 				</div>
 
 				<div class="input-row">
-					<input type="text" name="id" id="id" class="input" placeholder="ID">
+					<input value="customer1" type="text" name="id" id="id" class="input" placeholder="ID">
 				</div>
 				<div class="input-row">
-					<input type="password" name="pw" id="pw" class="input" placeholder="Password">
+					<input value="1234" type="password" name="pw" id="pw" class="input" placeholder="Password">
 				</div>
 
 				<button type="submit" class="btn">Sign In</button>
@@ -43,7 +43,7 @@
 			<div class="link-row">
 				or <em><a href="${pageContext.request.contextPath}/out/addCustomer">Register</a></em>
 			</div>
-			<a class="underline-link" href="${pageContext.request.contextPath}/out/findPw">Forgot your password?</a>
+			<a class="underline-link" href="">Forgot your password?</a>
 		</div>
 	</div>
 </body>

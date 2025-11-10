@@ -13,31 +13,63 @@ import dto.Goods;
 import dto.GoodsImg;
 
 public class GoodsDao {
+	
 	public List<Map<String, Object>> selectBestGoodsList() throws Exception{
-		List<Map<String, Object>> list = new ArrayList<>();
+		Connection conn = null;
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    List<Map<String, Object>> list = new ArrayList<>();
+	    
+	    String sql = """
+	            SELECT 
+	                    gi.filename filename
+	                    , g.goods_code goodsCode
+	                    , g.goods_name goodsName
+	                    , g.goods_price goodsPrice
+	            FROM
+	            goods g 
+	                LEFT JOIN goods_img gi
+	                ON g.goods_code = gi.goods_code
+	                INNER JOIN(
+	                    SELECT goods_code, COUNT(*) 
+	                    FROM orders
+	                    WHERE order_state = '배달완료'
+	                    GROUP BY goods_code
+	                    ORDER BY count(*) DESC
+	                    OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY
+	                ) t
+	                ON g.goods_code = t.goods_code
+	        """;
 		
-		String sql = """
-				SELECT 
-				        gi.filename filename
-				        , g.goods_code goodsCode
-				        , g.goods_name goodsName
-				        , g.goods_price goodsPrice
-				FROM
-				goods g INNER JOIN goods_img gi
-				ON g.goods_code = gi.goods_code
-				    INNER JOIN(SELECT goods_code, COUNT(*) FROM orders
-				                        group by goods_code
-				                        order by count(*) desc
-				                        offset 0 rows fetch next 5 rows only) t
-				    on g.goods_code = t.goods_code
-			""";
-		
-		
-		return list;
+		try {
+	        conn = DBConnection.getConn();
+	        stmt = conn.prepareStatement(sql);
+	        rs = stmt.executeQuery();
+
+	        while (rs.next()) {
+	            Map<String, Object> m = new HashMap<>();
+	            m.put("filename",  rs.getString("filename"));
+	            m.put("goodsCode", rs.getInt("goodsCode"));
+	            m.put("goodsName", rs.getString("goodsName"));
+	            m.put("goodsPrice", rs.getInt("goodsPrice"));
+	            list.add(m);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs   != null) rs.close();
+	            if (stmt != null) stmt.close();
+	            if (conn != null) conn.close();
+	        } catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+	    }
+	    return list;
 		
 	}
 	
-	// 직원이 보는 전체 굿즈 리스트 확인
+	// 전체 굿즈 리스트 확인
 	public List<Map<String, Object>> selectGoodsList(int beginRow, int rowPerPage) throws Exception {
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -50,10 +82,10 @@ public class GoodsDao {
 					, g.goods_code   goodsCode
 					, g.goods_name   goodsName
 					, g.goods_price  goodsPrice
-				FROM goods g INNER JOIN goods_img gi
-				ON g.goods_code = gi_goods_code
+				FROM goods g LEFT JOIN goods_img gi
+				ON g.goods_code = gi.goods_code
 				WHERE g.soldout IS NULL
-				ORDER BY goods_code DESC
+				ORDER BY g.goods_code DESC
 				OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
 			""";
 
@@ -96,7 +128,7 @@ public class GoodsDao {
 		ResultSet rs = null;
 		int total = 0;
 
-		String sql = "SELECT COUNT(*) cnt FROM goods";
+		String sql = "SELECT COUNT(*) cnt FROM goods WHERE soldout IS NULL";
 
 		try {
 			conn = DBConnection.getConn();

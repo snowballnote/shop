@@ -5,62 +5,115 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import dao.GoodsDao;
-import dto.Goods;
 
-@WebServlet("/emp/goodsList")
+@WebServlet("/customer/goodsList")
 public class GoodsListController extends HttpServlet {
-	private GoodsDao goodsDao;
-	@Override
+	private static final long serialVersionUID = 1L;
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// 페이지
-		int currentPage = 1; // 기본 페이지
-		String cp = request.getParameter("currentPage");
-		if (cp != null && !cp.isBlank()) {
+		GoodsDao goodsDao = new GoodsDao();
+
+		// -----------------------------------------------------------
+		// 1. 페이지네이션 변수 설정
+		// -----------------------------------------------------------
+		int currentPage = 1; // 현재 페이지 (기본값 1)
+		if (request.getParameter("currentPage") != null) {
 			try {
-				currentPage = Integer.parseInt(cp);
-			} catch (NumberFormatException ignore) {
-				currentPage = 1;
+				currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			} catch (NumberFormatException e) {
+				// 예외 발생 시 기본값 유지 (1)
 			}
 		}
-		if (currentPage < 1) currentPage = 1; // 1페이지 미만 방지
 
-		// 페이징 계산
-		int rowPerPage = 10; // 페이지당 행 수
-		int beginRow = (currentPage - 1) * rowPerPage;
+		int rowPerPage = 10; // 페이지당 상품 수
+		int pagePerPage = 10; // 페이지 블록당 페이지 수 (예: 1~10)
 
-		// DAO 호출
-		goodsDao = new GoodsDao();
-		List<Goods> goodsList = null;
-		int lastPage = 1;
+		int totalCount = 0;
+		int lastPage = 0;
+		int beginRow = 0;
+		int endRow = 0;
+		int startPage = 0;
+		int endPage = 0;
+
+		List<Map<String, Object>> goodsList = null;
+		List<Map<String, Object>> bestGoodsList = null; 
 
 		try {
-			// 전체 상품 수 조회
-			int totalCount = goodsDao.countGoods();
-			lastPage = (int) Math.ceil(totalCount / (double) rowPerPage);
-			if (lastPage < 1) lastPage = 1;
+			// -----------------------------------------------------------
+			// 2. 전체 상품 개수 조회 및 lastPage 계산
+			// -----------------------------------------------------------
+			
+			// ⭐⭐ DB 연결 성공 확인용 로그 (필요없다면 삭제) ⭐⭐
+			System.out.println("--- GoodsListController 실행 시작 ---");
+			
+			totalCount = goodsDao.countGoods();
+			
+			System.out.println("DEBUG: totalCount=" + totalCount); // 디버그 로그
 
-			// 현재 페이지가 마지막 페이지보다 크면 보정
-			if (currentPage > lastPage) {
-				currentPage = lastPage;
-				beginRow = (currentPage - 1) * rowPerPage;
+			lastPage = totalCount / rowPerPage;
+			if (totalCount % rowPerPage != 0) {
+				lastPage++;
 			}
 
-			// 상품 목록 조회 (최신순)
-			goodsList = goodsDao.selectGoodsList(beginRow, rowPerPage);
+			// -----------------------------------------------------------
+			// 3. 현재 페이지의 시작/끝 Row 계산
+			// -----------------------------------------------------------
+			beginRow = (currentPage - 1) * rowPerPage;
+			// MySQL이나 MariaDB는 LIMIT을 사용하므로, 시작 인덱스만 필요합니다.
+			// Oracle에서는 endRow도 필요합니다. (여기서는 MariaDB 기준 beginRow만 사용)
 
+			// -----------------------------------------------------------
+			// 4. 페이지 블록 시작/끝 페이지 계산
+			// -----------------------------------------------------------
+			startPage = ((currentPage - 1) / pagePerPage) * pagePerPage + 1;
+			endPage = startPage + pagePerPage - 1;
+			if (endPage > lastPage) {
+				endPage = lastPage;
+			}
+
+			// -----------------------------------------------------------
+			// 5. 상품 목록 조회 (페이지네이션 적용)
+			// -----------------------------------------------------------
+			if (totalCount > 0) {
+				goodsList = goodsDao.selectGoodsList(beginRow, rowPerPage);
+			}
+
+			// -----------------------------------------------------------
+			// 6. 베스트 상품 목록 조회
+			// -----------------------------------------------------------
+			bestGoodsList = goodsDao.selectBestGoodsList();
+			
+			System.out.println("DEBUG: bestGoodsList 사이즈=" + bestGoodsList.size()); // 디버그 로그
+			
 		} catch (Exception e) {
-			throw new ServletException(e);
+			e.printStackTrace();
+			// 오류 발생 시 사용자에게 500 오류를 명확히 알림
+			throw new ServletException(e); 
 		}
 
+		// -----------------------------------------------------------
+		// 7. JSP로 데이터 전달
+		// -----------------------------------------------------------
+		
+		// 페이지네이션 관련 변수
+		request.setAttribute("totalCount", totalCount);
 		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("startPage", startPage);
+		request.setAttribute("endPage", endPage);
 		request.setAttribute("lastPage", lastPage);
-		request.setAttribute("rowPerPage", rowPerPage);
-		request.setAttribute("goodsList", goodsList);
 
-		request.getRequestDispatcher("/WEB-INF/view/emp/goodsList.jsp").forward(request, response);
+		// 상품 목록 데이터
+		request.setAttribute("goodsList", goodsList);
+		
+		// ⭐⭐ 베스트 상품 목록 데이터 ⭐⭐
+		request.setAttribute("bestGoodsList", bestGoodsList); 
+
+		// JSP 페이지로 포워딩
+		request.getRequestDispatcher("/WEB-INF/view/customer/customerIndex.jsp").forward(request, response);
 	}
 }

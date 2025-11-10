@@ -1,58 +1,164 @@
+/* /static/css/customerMenu.css */
 @charset "UTF-8";
 
-/* 레이아웃을 좌측 메뉴 + 우측 콘텐츠로 쓰고 싶다면
-   .customer-layout 컨테이너를 페이지에서 사용해줘 */
-.customer-layout {
-  display: grid;
-  grid-template-columns: 260px 1fr;  /* 좌측 메뉴 260px */
-  gap: 0;
-  min-height: 100vh;
+/* 색상, 폰트 기본 설정 */
+:root {
+  --fg: #0f172a;     /* 본문 글자색 */
+  --muted: #64748b;  /* 보조 텍스트 */
+  --line: #e2e8f0;   /* 구분선 */
+  --accent: #0f172a; /* 활성 색 */
 }
 
-/* 사이드 메뉴 박스 */
 .customer-menu {
-  padding: 28px 24px;
-  border-right: 1px solid #eaecef;
-  background: #fff;                 /* 밝은 톤 (RECESS 느낌) */
+  width: 260px;
+  padding: 28px 16px 24px;
+  border-right: 1px solid var(--line);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial, "Apple SD Gothic Neo", sans-serif;
+  color: var(--fg);
 }
 
-/* 섹션 타이틀 */
+/* ---------------------------
+   상단 홈 이동 (🏬 Shop Main)
+---------------------------- */
+.customer-home {
+  padding: 16px 18px 10px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 8px;
+}
+
+.home-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--fg);
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.home-link:hover {
+  opacity: 0.85;
+}
+
+.home-link .emoji {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  margin-right: 2px;
+  transform: translateY(1px);
+}
+
+/* ---------------------------
+   환영 영역 (고객 이름/포인트)
+---------------------------- */
+.cm-welcome {
+  margin-bottom: 14px;
+}
+
+.cm-name {
+  margin: 0 0 4px;
+  font-weight: 700;
+}
+
+.cm-point {
+  margin: 0 0 8px;
+  color: var(--muted);
+}
+
+.cm-point strong {
+  font-variant-numeric: tabular-nums; /* 숫자 간격 일정 */
+}
+
+.cm-logout {
+  display: inline-block;
+  margin-top: 6px;
+  color: var(--fg);
+  text-decoration: none;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.cm-logout:hover {
+  text-decoration: underline;
+  opacity: 1;
+}
+
+/* ---------------------------
+   구분선
+---------------------------- */
+.cm-sep {
+  border: 0;
+  height: 1px;
+  background: var(--line);
+  margin: 12px 0 18px;
+}
+
+/* ---------------------------
+   타이틀 (MY ACCOUNT)
+---------------------------- */
 .cm-title {
-  margin: 0 0 18px;
-  font-size: 20px;
+  margin: 0 0 12px;
+  font-size: 18px;
   font-weight: 800;
-  letter-spacing: .02em;
-  color: #111;
+  letter-spacing: 0.03em;
 }
 
-/* 링크 묶음 */
+/* ---------------------------
+   네비게이션 링크
+---------------------------- */
 .cm-links {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
-/* 대문자 + 두꺼운 밑줄 스타일(스크린샷 느낌) */
+/* 공통 링크 스타일 */
 .cm-links a {
   display: inline-block;
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: .06em;
+  color: var(--fg);
+  text-decoration: none;
   text-transform: uppercase;
-  color: #111;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-  line-height: 1.5;
+  font-weight: 700;
+  line-height: 1.3;
+  transition: opacity 0.2s ease;
 }
 
-/* hover/active */
 .cm-links a:hover {
-  opacity: .85;
-  text-underline-offset: 4px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  opacity: 0.85;
 }
 
+/* 활성 상태 */
 .cm-links a.is-active {
-  opacity: 1;
-  text-decoration-thickness: 3px;   /* 현재 위치 강조 */
+  text-decoration: none;
+  background: var(--accent);
+  color: #fff;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+/* ---------------------------
+   전체 링크 톤 정리
+---------------------------- */
+.customer-menu a,
+.customer-menu a:visited {
+  color: var(--fg);
+  text-decoration: none;
+}
+.customer-menu .emoji { display:inline-flex; width:18px; height:18px; align-items:center; justify-content:center; }
+
+
+/* ---------------------------
+   반응형
+---------------------------- */
+@media (max-width: 960px) {
+  .customer-menu {
+    width: 220px;
+  }
 }

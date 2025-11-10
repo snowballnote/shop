@@ -1,161 +1,466 @@
-@charset "UTF-8";
+/* customerIndex.css */
 
-/* Base */
-* { box-sizing: border-box; }
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
-  color: #201f1f;
-  background: #fffefe;
+/* -------------------- 1. 기본 레이아웃 및 폰트 설정 -------------------- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    background-color: #f8f8f8; /* 배경색 설정 */
 }
 
-/* Layout */
-.cx-header {
-  display: grid;
-  place-items: center;
-  padding: 48px 16px 24px;
-}
-.cx-header h1 {
-  margin: 0;
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: .02em;
-}
-
-.cx-main {
-  width: 100%;
-  max-width: 966px;
-  margin: 0 auto;
-  padding: 0 16px 64px;
-}
-
-.cx-section + .cx-section {
-  margin-top: 36px;
+.customer-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 .cx-subtitle {
-  font-size: 16px;
-  font-weight: 800;
-  margin: 0 0 14px;
-  letter-spacing: .02em;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: #333;
 }
 
-/* Account box */
-.cx-account {
-  border: 1px solid #201f1f;
-  border-radius: 18px;
-  padding: 18px 18px 6px;
-  background: #fff;
-}
-.cx-welcome {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .08em;
-  opacity: .7;
-  margin-bottom: 6px;
-}
-.cx-line {
-  margin: 0 0 6px;
-  font-size: 14px;
-}
-.cx-point strong { font-weight: 800; }
-
-/* Links (stacked) */
-.cx-links {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.cx-link,
-.cx-link:visited {
-  color: #201f1f;            /* 보라색 방지 */
-  text-decoration: underline;
-  font-size: 14px;
-}
-.cx-link:hover { opacity: .7; }
-
-.cx-count {
-  margin-left: 4px;
-  font-weight: 700;
-}
-
-/* Sub link under YOUR ADDRESSES */
-.cx-sublink,
-.cx-sublink:visited {
-  display: inline-block;
-  margin: 2px 0 6px 14px;    /* 살짝 들여쓰기로 계층감 */
-  font-size: 13px;
-  color: #201f1f;            /* 보라색 방지 */
-  text-decoration: underline;
-  opacity: .85;
-}
-.cx-sublink:hover { opacity: .65; }
-
-/* Table */
-.cx-tablewrap { overflow-x: auto; }
-.cx-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-.cx-table th,
-.cx-table td {
-  border-bottom: 1px solid #e5e7eb;
-  padding: 10px 12px;
-  text-align: left;
-}
-.cx-table th {
-  background: #fafafa;
-  font-weight: 700;
-}
-.cx-underline,
-.cx-underline:visited {
-  color: #201f1f;            /* 방문색 방지 */
-  text-decoration: underline;
-}
-
-/* Empty */
 .cx-empty {
-  margin: 0;
-  color: #888;
-  font-size: 14px;
+    text-align: center;
+    padding: 30px;
+    color: #777;
+    font-size: 1.1rem;
 }
 
-/* Footer */
+.cx-sep {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 40px 0;
+}
+
+/* -------------------- 2. 상품 목록 그리드 설정 -------------------- */
+.cx-grid {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin-bottom: 40px;
+}
+
+.cx-grid tr {
+    /* 각 행 간의 간격 조정을 위해 td에 패딩 적용 */
+}
+
+/* -------------------- 3. 개별 상품 카드 설정 (핵심) -------------------- */
+.cx-card {
+    width: 19.9%; /* 5개씩 배치 (100% / 5) */
+    padding: 0 10px 30px; /* 카드 간 여백 */
+    box-sizing: border-box;
+    text-align: left;
+    position: relative;
+    /* 카드 자체에는 테두리 및 그림자 제거 (이미지에만 적용) */
+    border: none;
+    background-color: transparent;
+}
+
+/* 상품 썸네일 영역 (.cx-thumb) - ✨ 이미지에만 테두리 적용 ✨ */
+.cx-thumb {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px; /* 둥근 모서리 */
+    margin-bottom: 10px;
+    padding-top: 130%; /* 세로가 긴 직사각형 비율 (1:1.3) */
+    
+    /* 테두리 및 그림자 */
+    border: 1px solid #000000; 
+}
+
+.cx-thumb img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.cx-thumb:hover img {
+    transform: scale(1.03); /* 호버 시 확대 효과 */
+}
+
+/* -------------------- 4. 상품 정보 및 가격 -------------------- */
+.cx-info {
+    padding: 5px 0;
+}
+
+.cx-name {
+    display: block;
+    font-size: 0.80rem;
+    color: #333;
+    text-decoration: none;
+    margin-bottom: 5px;
+    line-height: 1.3;
+    /* 2줄 말줄임표 */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.cx-name:hover {
+    text-decoration: underline;
+}
+
+.cx-price {
+    font-size: 0.80rem; /* 가격 강조 */
+    /*font-weight: bold;*/
+    color: #000;
+}
+
+/* -------------------- 5. QUICK BUY 버튼 설정 -------------------- */
+/* 이 클래스를 <a class="cx-quick-buy">QUICK BUY</a> 에 사용합니다. */
+.cx-quick-buy {
+    display: block;
+    width: 100%; 
+    margin: 15px 0 0; /* 상품 정보 아래 여백 */
+    padding: 10px 0;
+    border: 1px solid #000; /* 검은색 테두리 */
+    border-radius: 30px; /* 매우 둥근 버튼 */
+    background-color: #fff;
+    color: #000;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cx-quick-buy:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+
+/* -------------------- 6. 태그 및 좋아요 버튼 (선택 사항) -------------------- */
+/* 좋아요 하트 아이콘 */
+.cx-card .cx-like {
+    position: absolute;
+    bottom: 95px; /* 이미지 하단 근처 (cx-thumb 높이 고려) */
+    right: 25px;
+    width: 34px;
+    height: 34px;
+    background-color: white;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); 
+}
+.cx-card .cx-like::before {
+    content: '♡';
+    font-size: 1.2rem;
+    color: #999;
+    line-height: 1;
+}
+
+/* "BACK IN STOCK" 또는 "NEW IN" 태그 */
+.cx-card .cx-tag {
+    position: absolute;
+    top: 25px; 
+    right: 25px; 
+    background-color: #000;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 20px;
+    z-index: 10;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cx-card .cx-tag.new {
+    background-color: #79a88c; /* 이미지의 "NEW IN" 색상 */
+    color: white;
+}
+
+/* -------------------- 7. 페이징 및 푸터 -------------------- */
+.cx-paging {
+    text-align: center;
+    margin-top: 40px;
+    padding: 10px 0;
+}
+
+.cx-paging .pg-btn {
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+
+.cx-paging .pg-info {
+    font-weight: bold;
+    margin: 0 10px;
+}
+
 .cx-footer {
-  display: grid;
-  place-items: center;
-  padding: 36px 16px 48px;
-  color: #666;
-  font-size: 12px;
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px 0;
+    border-top: 1px solid #eee;
+    color: #999;
+    font-size: 0.8rem;
+}
+/* customerIndex.css */
+
+/* -------------------- 1. 기본 레이아웃 및 폰트 설정 -------------------- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    background-color: #ffffff; /* 배경색 설정 */
 }
 
-/* Responsive */
-@media (max-width: 749px) {
-  .cx-header { padding-top: 36px; }
-  .cx-header h1 { font-size: 22px; }
-}
-/* --- visited 보라색 방지 (붙여넣기) --- */
-.cx-links a,
-.cx-links a:link,
-.cx-links a:visited,
-.cx-add-link,
-.cx-add-link:link,
-.cx-add-link:visited,
-.underline-link,
-.underline-link:link,
-.underline-link:visited {
-  color: #201f1f !important;   /* 필요시 !important로 강제 */
-  text-decoration: underline;  /* 원하면 제거 가능 */
+.customer-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-/* 호버 효과(선택) */
-.cx-links a:hover,
-.cx-add-link:hover,
-.underline-link:hover {
-  opacity: .7;
+.cx-subtitle {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: #333;
 }
 
+.cx-empty {
+    text-align: center;
+    padding: 30px;
+    color: #777;
+    font-size: 1.1rem;
+}
+
+.cx-sep {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 40px 0;
+}
+
+/* -------------------- 2. 상품 목록 그리드 설정 -------------------- */
+.cx-grid {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin-bottom: 40px;
+}
+
+.cx-grid tr {
+    /* 각 행 간의 간격 조정을 위해 td에 패딩 적용 */
+}
+
+/* -------------------- 3. 개별 상품 카드 설정 (핵심) -------------------- */
+.cx-card {
+    width: 19.9%; /* 5개씩 배치 (100% / 5) */
+    padding: 0 10px 30px; /* 카드 간 여백 */
+    box-sizing: border-box;
+    text-align: left;
+    position: relative;
+    /* 카드 자체에는 테두리 및 그림자 제거 (이미지에만 적용) */
+    border: none;
+    background-color: transparent;
+}
+
+/* 상품 썸네일 영역 (.cx-thumb) - ✨ 이미지에만 테두리 적용 ✨ */
+.cx-thumb {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px; /* 둥근 모서리 */
+    margin-bottom: 10px;
+    padding-top: 130%; /* 세로가 긴 직사각형 비율 (1:1.3) */
+    
+    /* 테두리 및 그림자 */
+    border: 1px solid #000000; 
+}
+
+.cx-thumb img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.cx-thumb:hover img {
+    transform: scale(1.03); /* 호버 시 확대 효과 */
+}
+
+/* -------------------- 4. 상품 정보 및 가격 -------------------- */
+.cx-info {
+    padding: 5px 0;
+}
+
+.cx-name {
+    display: block;
+    font-size: 0.80rem;
+    color: #333;
+    text-decoration: none;
+    margin-bottom: 5px;
+    line-height: 1.3;
+    /* 2줄 말줄임표 */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.cx-name:hover {
+    text-decoration: underline;
+}
+
+.cx-price {
+    font-size: 0.80rem; /* 가격 강조 */
+    /*font-weight: bold;*/
+    color: #000;
+}
+
+/* -------------------- 5. QUICK BUY 버튼 설정 -------------------- */
+/* 이 클래스를 <a class="cx-quick-buy">QUICK BUY</a> 에 사용합니다. */
+.cx-quick-buy {
+    display: block;
+    width: 100%; 
+    margin: 15px 0 0; /* 상품 정보 아래 여백 */
+    padding: 10px 0;
+    border: 1px solid #000; /* 검은색 테두리 */
+    border-radius: 30px; /* 매우 둥근 버튼 */
+    background-color: #fff;
+    color: #000;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cx-quick-buy:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+
+/* -------------------- 6. 태그 및 좋아요 버튼 (선택 사항) -------------------- */
+/* 좋아요 하트 아이콘 */
+.cx-card .cx-like {
+    position: absolute;
+    bottom: 95px; /* 이미지 하단 근처 (cx-thumb 높이 고려) */
+    right: 25px;
+    width: 34px;
+    height: 34px;
+    background-color: white;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); 
+}
+.cx-card .cx-like::before {
+    content: '♡';
+    font-size: 1.2rem;
+    color: #999;
+    line-height: 1;
+}
+
+/* "BACK IN STOCK" 또는 "NEW IN" 태그 */
+.cx-card .cx-tag {
+    position: absolute;
+    top: 25px; 
+    right: 25px; 
+    background-color: #000;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 20px;
+    z-index: 10;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cx-card .cx-tag.new {
+    background-color: #79a88c; /* 이미지의 "NEW IN" 색상 */
+    color: white;
+}
+
+/* -------------------- 7. 페이징 및 푸터 -------------------- */
+.cx-paging {
+    text-align: center;
+    margin-top: 40px;
+    padding: 10px 0;
+}
+
+.cx-paging .pg-btn {
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+
+.cx-paging .pg-info {
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+.cx-footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px 0;
+    border-top: 1px solid #eee;
+    color: #999;
+    font-size: 0.8rem;
+}
+/* 페이지네이션 전체 컨테이너 */
+.pagination {
+    display: flex; 
+    list-style: none; 
+    /* justify-content: center; (이 스타일이 가운데 정렬을 담당합니다) */
+}
+
+/* 각 페이지 항목 및 링크 스타일 */
+.page-item {
+    margin: 0 4px; /* 페이지 번호 간 간격 */
+}
+
+/* 페이지 링크: 일반 페이지 번호 (보라색/파란색 제거) */
+.page-link {
+    padding: 6px 12px;
+    color: #000000; /* 검은색/짙은 회색으로 변경 */
+    text-decoration: none; /* 밑줄 제거 (가장 중요!) */
+    display: block; 
+}
+
+/* 현재 페이지 (활성화된 페이지) 스타일 수정 */
+.page-item.active .page-link {
+    color: #fff; /* 글자색 흰색 유지 */
+    background-color: #333; /* 활성화된 페이지 배경색을 어두운 회색/검은색으로 변경 */
+    border-color: #333; /* 테두리색도 동일하게 변경 */
+    text-decoration: none; /* 활성 페이지 밑줄 제거 */
+}
+
+/* 마우스 오버 시 스타일 (파란색 계열 제거) */
+.page-link:hover {
+    color: #000; /* 글자색 검은색 */
+    background-color: #eee; /* 배경색을 연한 회색으로 변경 */
+    border-color: #ccc;
+}
