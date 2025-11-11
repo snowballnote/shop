@@ -29,7 +29,6 @@
 
 			<!-- 우측 메인 콘텐츠 -->
 			<main class="admin-content">
-
 				<header class="emp-header">
 					<h1 class="page-title">관리자 대시보드</h1>
 					<div class="emp-user">
@@ -37,6 +36,7 @@
 						<a href="${pageContext.request.contextPath}/emp/empLogout" class="logout-btn">로그아웃</a>
 					</div>
 				</header>
+				<c:import url="/WEB-INF/view/emp/stats.jsp" />
 			</main>
 		</div>
 	</c:if>
