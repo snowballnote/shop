@@ -43,7 +43,7 @@
         </a>
       </c:when>
       <c:otherwise>
-        <a class="chd-iconbtn" href="${pageContext.request.contextPath}/customer/customerInfo" aria-label="Account">
+        <a class="chd-iconbtn" href="${pageContext.request.contextPath}/customer/customerMenu" aria-label="Account">
           <svg viewBox="0 0 24 24" class="chd-ico" aria-hidden="true">
             <circle cx="12" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
             <path d="M4 20c0-4 4-6 8-6s8 2 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>

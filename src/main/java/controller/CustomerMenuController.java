@@ -8,8 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 // 💡 URL 경로와 클래스 이름을 일치시키고, URL은 소문자로 지정합니다.
-@WebServlet("/customer/customerInfo") 
-public class CustomerInfoController extends HttpServlet {
+@WebServlet("/customer/customerMenu") 
+public class CustomerMenuController extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,8 +22,8 @@ public class CustomerInfoController extends HttpServlet {
         // (현재는 생략)
         
         // 2. JSP 페이지로 포워딩
-        // 이 경로는 /WEB-INF/view/customer/customerInfo.jsp 로 가정합니다.
-		request.getRequestDispatcher("/WEB-INF/view/customer/customerInfo.jsp").forward(request, response);
+        // 이 경로는 /WEB-INF/view/customer/customerMenu.jsp 로 가정합니다.
+		request.getRequestDispatcher("/WEB-INF/view/customer/customerMenu.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

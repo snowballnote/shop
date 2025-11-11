@@ -1,164 +1,168 @@
-/* /static/css/customerMenu.css */
-@charset "UTF-8";
-
-/* 색상, 폰트 기본 설정 */
-:root {
-  --fg: #0f172a;     /* 본문 글자색 */
-  --muted: #64748b;  /* 보조 텍스트 */
-  --line: #e2e8f0;   /* 구분선 */
-  --accent: #0f172a; /* 활성 색 */
+/* -------------------------------------------------- */
+/* 1. 레이아웃 (2단 구조 및 왼쪽 정렬) */
+/* -------------------------------------------------- */
+.page-container {
+    max-width: 1200px;
+    margin: 0 auto; 
+    /* 🚨 메뉴를 브라우저 왼쪽 끝에 붙이려면 이 패딩을 0으로 만듭니다. */
+    padding-left: 0; 
+    padding-right: 20px; 
 }
+
+.content-wrap {
+    display: flex; 
+    padding-top: 20px;
+    padding-bottom: 80px;
+}
+
+/* 왼쪽 메뉴 컬럼: 왼쪽 끝에 붙이고, 오른쪽 여백만 남김 */
+.menu-column {
+    flex-shrink: 0; 
+    width: 250px; 
+    padding-left: 0 !important; /* 🚨 왼쪽으로 붙이는 핵심 */
+    padding-right: 50px; 
+}
+
+/* 오른쪽 본문 컨텐츠 컬럼 */
+.info-column {
+    flex-grow: 1; 
+    padding-left: 50px; 
+    padding-right: 50px;
+    padding-top: 30px;
+}
+
+
+/* -------------------------------------------------- */
+/* 2. 왼쪽 메뉴 (customerMenu) 스타일 */
+/* -------------------------------------------------- */
 
 .customer-menu {
-  width: 260px;
-  padding: 28px 16px 24px;
-  border-right: 1px solid var(--line);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial, "Apple SD Gothic Neo", sans-serif;
-  color: var(--fg);
+    border: none;
+    padding: 0; /* 메뉴 자체의 내부 패딩 제거 */
 }
 
-/* ---------------------------
-   상단 홈 이동 (🏬 Shop Main)
----------------------------- */
-.customer-home {
-  padding: 16px 18px 10px;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 8px;
+/* 메뉴 제목: "ACCOUNT DETAILS" */
+.customer-menu .cm-title {
+    font-size: 1.5rem; 
+    font-weight: bold;
+    color: #000;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-transform: uppercase;
 }
 
-.home-link {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--fg);
-  text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease;
+/* 환영 영역 스타일 */
+.customer-menu .cm-welcome {
+    margin-bottom: 20px;
+}
+.customer-menu .cm-welcome .cm-name,
+.customer-menu .cm-welcome .cm-line {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 5px 0;
+}
+.customer-menu .cm-welcome strong {
+    font-weight: bold;
 }
 
-.home-link:hover {
-  opacity: 0.85;
+/* 로그아웃 링크 */
+.customer-menu .cm-logout {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: #333 !important;
+    text-decoration: underline;
+    margin-top: 10px;
 }
 
-.home-link .emoji {
-  width: 18px;
-  height: 18px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 17px;
-  margin-right: 2px;
-  transform: translateY(1px);
+/* -------------------------------------------------- */
+/* 3. 메뉴 링크 (줄 나눔 및 색상 강제 적용) - 핵심 해결책 */
+/* -------------------------------------------------- */
+
+/* 1. 네비게이션 컨테이너: 세로 나열 강제 (줄 나눔) */
+.customer-menu .cm-links { /* 🚨 선택자 변경: .customer-menu로 직접 접근 */
+    display: flex !important;
+    flex-direction: column !important;
+    margin-top: 30px; 
 }
 
-/* ---------------------------
-   환영 영역 (고객 이름/포인트)
----------------------------- */
-.cm-welcome {
-  margin-bottom: 14px;
+/* 2. 모든 메뉴 링크 (굵고 밑줄, 검은색) */
+/* 로그아웃 링크 */
+.customer-menu .cm-logout {
+    display: inline-block;
+    
+    /* 🚨 요청하신 스타일 적용 🚨 */
+    margin-top: 14px;
+    font-size: 13px;
+    
+    color: #333 !important;
+    text-decoration: underline;
+}
+.customer-menu .cm-links a { /* 🚨 선택자 변경: .customer-menu로 직접 접근 */
+    /* 🚨 줄 바꿈 핵심: 블록 요소로 강제 지정 */
+    display: block !important; 
+    
+    font-size: 1rem;
+    font-weight: bold !important; 
+    
+    /* 🚨 색상 강제 지정: 파란색/보라색 방지 */
+    color: #000 !important; 
+    
+    text-decoration: underline !important;
+    text-transform: uppercase;
+    
+    padding: 5px 0 !important;
+    margin-bottom: 15px !important; 
+    transition: color 0.2s ease;
 }
 
-.cm-name {
-  margin: 0 0 4px;
-  font-weight: 700;
+/* 🚨 방문한 링크 (보라색) 강제 검은색 지정 */
+.customer-menu .cm-links a:visited {
+    color: #000 !important;
 }
 
-.cm-point {
-  margin: 0 0 8px;
-  color: var(--muted);
+/* 마우스 오버 시 스타일 */
+.customer-menu .cm-links a:hover {
+    color: #555 !important;
+    text-decoration: none !important;
 }
 
-.cm-point strong {
-  font-variant-numeric: tabular-nums; /* 숫자 간격 일정 */
+/* 현재 활성화된 페이지 링크 스타일 */
+.customer-menu .cm-links a.is-active {
+    color: #000 !important; 
 }
 
-.cm-logout {
-  display: inline-block;
-  margin-top: 6px;
-  color: var(--fg);
-  text-decoration: none;
-  font-weight: 600;
-  opacity: 0.9;
+
+/* -------------------------------------------------- */
+/* 4. 오른쪽 컨텐츠 스타일 (Order History 등) */
+/* -------------------------------------------------- */
+
+/* 메인 제목: "My Account" */
+.page-main-title {
+    font-size: 2.2rem; 
+    font-weight: bold; 
+    text-align: center; 
+    margin-top: 50px;
+    margin-bottom: 50px; 
+    color: #000; 
 }
 
-.cm-logout:hover {
-  text-decoration: underline;
-  opacity: 1;
+/* 오른쪽 컨텐츠 내 소제목: "Order History" */
+.account-title {
+    font-size: 1.5rem; 
+    font-weight: bold; 
+    margin-top: 30px; 
+    margin-bottom: 20px; 
+    color: #000; 
 }
 
-/* ---------------------------
-   구분선
----------------------------- */
-.cm-sep {
-  border: 0;
-  height: 1px;
-  background: var(--line);
-  margin: 12px 0 18px;
+/* 오른쪽 컨텐츠 내 일반 텍스트 */
+.customer-main-content p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 5px 0;
+    color: #333;
 }
-
-/* ---------------------------
-   타이틀 (MY ACCOUNT)
----------------------------- */
-.cm-title {
-  margin: 0 0 12px;
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: 0.03em;
-}
-
-/* ---------------------------
-   네비게이션 링크
----------------------------- */
-.cm-links {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* 공통 링크 스타일 */
-.cm-links a {
-  display: inline-block;
-  color: var(--fg);
-  text-decoration: none;
-  text-transform: uppercase;
-  font-weight: 700;
-  line-height: 1.3;
-  transition: opacity 0.2s ease;
-}
-
-.cm-links a:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 2px;
-  opacity: 0.85;
-}
-
-/* 활성 상태 */
-.cm-links a.is-active {
-  text-decoration: none;
-  background: var(--accent);
-  color: #fff;
-  padding: 6px 8px;
-  border-radius: 6px;
-}
-
-/* ---------------------------
-   전체 링크 톤 정리
----------------------------- */
-.customer-menu a,
-.customer-menu a:visited {
-  color: var(--fg);
-  text-decoration: none;
-}
-.customer-menu .emoji { display:inline-flex; width:18px; height:18px; align-items:center; justify-content:center; }
-
-
-/* ---------------------------
-   반응형
----------------------------- */
-@media (max-width: 960px) {
-  .customer-menu {
-    width: 220px;
-  }
+.customer-main-content .order-empty-message {
+    color: #777;
+    margin-top: 10px;
 }
