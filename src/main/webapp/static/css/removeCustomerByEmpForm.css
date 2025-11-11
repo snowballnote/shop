@@ -1,132 +1,149 @@
-/* removeCustomerByEmpForm.css */
 @charset "UTF-8";
 
-/* Reset & Base */
-* { box-sizing: border-box; }
-html, body {
-	margin: 0;
-	padding: 0;
-	font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
-	color: #201f1f;
-	background: #fffefe;
+/* * removeCustomerByEmpForm.css
+ * Base styles (font, reset, etc.) are assumed to be handled by adminLayout.css 
+ * and the base styles provided from the product form CSS.
+*/
+
+/* ---------------------------------------------------- */
+/* 1. 레이아웃 오버라이드 (Admin Layout에 맞춰 조정) */
+/* ---------------------------------------------------- */
+/* 주신 상품 등록 폼의 .page-center는 adminLayout과 충돌할 수 있으므로, 
+   admin-content 내부의 .page-center에 맞게 재정의합니다. */
+
+.admin-content {
+    /* 기존 admin-content의 flex 속성을 활용하여 중앙 정렬을 보조 */
+    display: flex;
+    justify-content: center; /* 수평 중앙 */
+    align-items: flex-start; /* 수직 상단 시작 */
+    padding-top: 64px; /* 상품 폼 기준 */
+    min-height: 100vh;
 }
 
-/* Center Layout */
 .page-center {
-	min-height: calc(100vh - 140px);
-	display: grid;
-	place-items: start center;
-	padding-top: 64px;
-	padding-left: 16px;
-	padding-right: 16px;
+    width: 100%;
+    max-width: 520px; /* 상품 폼과 동일한 최대 너비 */
+    padding: 0 16px; /* 좌우 패딩 유지 */
 }
 
-/* Wrapper */
 .form-wrap {
-	width: 100%;
-	max-width: 520px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+    /* 상품 폼과 동일 */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Title */
 .form-title {
-	font-size: 22px;
-	font-weight: 800;
-	letter-spacing: .02em;
-	margin: 0 0 18px;
+    /* 상품 폼과 동일 */
+    font-size: 22px;
+    font-weight: 800;
+    margin: 0 0 18px;
 }
 
-/* Message */
-.msg {
-	display: none;
-	width: 100%;
-	max-width: 520px;
-	margin: 8px 0 0;
-	font-size: 13px;
-	color: #d33;
+
+/* ---------------------------------------------------- */
+/* 2. 강제 탈퇴 고유 스타일 (안내 문구 & 경고) */
+/* ---------------------------------------------------- */
+
+.confirm-text {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 0 20px;
+    font-size: 16px; /* 가독성을 위해 조금 크게 */
+    line-height: 1.6;
+    text-align: center;
+    color: #333;
 }
 
-/* Form */
-form {
-	width: 100%;
-	max-width: 520px;
+.confirm-text strong {
+    font-weight: 700;
+    color: #201f1f;
 }
+
+.confirm-text .warn {
+    color: #e74c3c; /* 🚨 경고색 */
+    font-weight: 800;
+    font-size: 1.1em;
+}
+
+
+/* ---------------------------------------------------- */
+/* 3. 메모장 (Textarea) 스타일 재사용 */
+/* ---------------------------------------------------- */
+
 .input-row {
-	margin-bottom: 14px;
-	width: 100%;
+    margin-bottom: 20px; /* 버튼과의 간격 확보 */
+    width: 100%;
 }
 
-/* Inputs */
-.input {
-	width: 100%;
-	height: 38px;
-	padding: 0 14px;
-	border: 1.2px solid #201f1f;
-	border-radius: 24px;
-	outline: none;
-	background: #fff;
-	font-size: 14px;
-}
-.input:focus {
-	border-color: #201f1f;
-}
-
-/* Textarea */
+/* 상품 폼의 .textarea 스타일 재사용 */
 .textarea {
-	width: 100%;
-	height: 120px;
-	padding: 10px 14px;
-	border: 1.2px solid #201f1f;
-	border-radius: 18px;
-	outline: none;
-	background: #fff;
-	font-size: 14px;
-	resize: none;
-	line-height: 1.4;
+   width: 100%;
+  height: 120px;
+  padding: 10px 14px;
+  border: 1.2px solid #201f1f;
+  border-radius: 18px;
+  outline: none;
+  background: #fff;
+  font-size: 14px;
+  resize: none;
+  line-height: 1.4;
 }
+
 .textarea:focus {
-	border-color: #201f1f;
+    border-color: #201f1f;
 }
 
-/* Button */
-.btn {
-	width: 100%;
-	height: 38px;
-	margin-top: 12px;
-	border: 1.4px solid #201f1f;
-	border-radius: 24px;
-	background: #fff;
-	color: #201f1f;
-	font-size: 13px;
-	font-weight: 700;
-	letter-spacing: .08em;
-	text-transform: uppercase;
-	cursor: pointer;
+
+/* ---------------------------------------------------- */
+/* 4. 버튼 스타일 (submit-btn 클래스에 강제 탈퇴 스타일 적용) */
+/* ---------------------------------------------------- */
+
+/* submit-btn 클래스를 상품 폼의 .btn 스타일 기반으로 정의 */
+.submit-btn {
+    width: 100%;
+  max-width: 520px;
+  display: block;
+  margin: 12px auto 0;
+  height: 38px;
+  border: 1.4px solid #201f1f;
+  border-radius: 24px;
+  background: #fff;
+  color: #201f1f;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
 }
-.btn:hover {
-	background: #f7f7f7;
+.submit-btn:hover {
+    background: #f7f7f7;
 }
 
-/* Links */
+/* ---------------------------------------------------- */
+/* 5. 링크 스타일 (상품 폼과 동일) */
+/* ---------------------------------------------------- */
+
 .link-row {
-	margin-top: 14px;
-	font-size: 13px;
-  	text-align: center;
+    margin-top: 14px;
+    font-size: 13px;
+    text-align: center;
 }
 .link-row a,
 .link-row a:visited {
-	color: #201f1f;
-	text-decoration: underline;
+  color: #201f1f;
+  text-decoration: underline;
 }
 .link-row a:hover {
-	opacity: .7;
+  opacity: .7;
 }
 
-/* Mobile */
+/* ---------------------------------------------------- */
+/* 모바일 반응형 (상품 폼과 동일) */
+/* ---------------------------------------------------- */
 @media (max-width: 749px) {
-	.page-center {
-		padding-top: 40px;
-	}
+  .page-center {
+    padding-top: 40px;
+  }
 }

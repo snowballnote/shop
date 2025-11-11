@@ -17,7 +17,7 @@ public class CustomerDao {
 		PreparedStatement psDel = null; // delete
 		PreparedStatement psIns = null; // insert
 
-		String sqlCustomer = "DELETE FROM customer WHERE customer_id = ?";
+		String sqlCustomer = "UPDATE customer SET status = 'FORCE_OUT' WHERE customer_id = ?";
 		// createdate는 DB에서 SYSDATE로 채움
 		String sqlOutid   = "INSERT INTO outid (id, memo, createdate) VALUES (?, ?, SYSDATE)";
 
@@ -74,6 +74,7 @@ public class CustomerDao {
 	                , point
 	                , createdate 
 	            FROM customer
+	            WHERE status = 'ACTIVE'
 	            ORDER BY customer_code
 	            OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
 	        """;
@@ -120,7 +121,7 @@ public class CustomerDao {
 		ResultSet rs = null;
 		int total = 0;
 		
-		String sql = "SELECT COUNT(*) cnt FROM customer";
+		String sql = "SELECT COUNT(*) cnt FROM customer WHERE status = 'ACTIVE'";
 		
 		try {
 			conn = DBConnection.getConn();

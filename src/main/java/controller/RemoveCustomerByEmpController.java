@@ -48,7 +48,14 @@ public class RemoveCustomerByEmpController extends HttpServlet {
 		// 파라미터 수집
 		String customerId = request.getParameter("customerId");
 		String memo       = request.getParameter("memo");
-
+		
+		// 🚨 디버깅 및 유효성 검사 추가 (필수)
+		if (customerId == null || customerId.trim().isEmpty()) {
+		    System.err.println("❌❌❌ FATAL: customerId 파라미터 값이 없습니다. 이전 JSP의 Form을 확인하세요! ❌❌❌");
+		    // 오류 페이지로 리다이렉트하거나 오류 메시지를 표시해야 합니다.
+		    // 현재는 에러를 찍고 진행하므로, 계속 진행되더라도 고객 삭제는 안 됩니다.
+		}
+		
 		// DTO 구성 (createdate는 DAO에서 SYSDATE 처리)
 		Outid outid = new Outid();
 		outid.setId(customerId);
@@ -59,7 +66,7 @@ public class RemoveCustomerByEmpController extends HttpServlet {
 		try {
 			customerDao.deleteCustomerByEmp(outid);
 			response.sendRedirect(request.getContextPath()
-				+ "/emp/customerList?currentPage=" + currentPage);
+				+ "/emp/outidList?currentPage=" + currentPage);
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendRedirect(request.getContextPath()
