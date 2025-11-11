@@ -13,7 +13,56 @@ import dto.Goods;
 import dto.GoodsImg;
 
 public class GoodsDao {
-	
+	// /customer/goodsOne
+	public Map<String, Object> selectGoodsOne(int goods_code) throws Exception {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		Map<String, Object> m = new HashMap<String, Object>();
+
+		String sql = """
+				SELECT
+					gi.filename filename
+					, g.goods_code   goodsCode
+					, g.goods_name   goodsName
+					, g.goods_price  goodsPrice
+					, nvl(g.soldout, '0') soldout
+					, g.point_rate pointRate
+				FROM goods g INNER JOIN goods_img gi
+				ON g.goods_code = gi.goods_code
+				WHERE g.goods_code = ?
+			""";
+
+		try {
+			conn = DBConnection.getConn();
+			stmt = conn.prepareStatement(sql);
+
+			stmt.setInt(1, goods_code);
+
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				m.put("filename", rs.getString("filename"));
+				m.put("goodsCode", rs.getInt("goodsCode"));
+				m.put("goodsName", rs.getString("goodsName"));
+				m.put("goodsPrice", rs.getInt("goodsPrice"));
+				m.put("soldout", rs.getString("soldout"));
+				m.put("pointRate", rs.getDouble("pointRate"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(stmt != null) stmt.close();
+				if(conn != null) conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return m;
+	}
+
 	public List<Map<String, Object>> selectBestGoodsList() throws Exception{
 		Connection conn = null;
 	    PreparedStatement stmt = null;
@@ -188,7 +237,7 @@ public class GoodsDao {
 			
 			// 2) goods 입력
 			stmtGoods = conn.prepareStatement(sqlGoods);
-			stmtGoods.setInt(1, goodsCode);
+			stmtGoods.setInt(1, goods.getGoodsCode());
 			stmtGoods.setString(2, goods.getGoodsName());
 			stmtGoods.setInt(3, goods.getGoodsPrice());
 			stmtGoods.setInt(4, goods.getEmpCode());
@@ -201,7 +250,7 @@ public class GoodsDao {
 			}
 			// 3) // 상품입력에 성공하면 img 입력
 			stmtImg = conn.prepareStatement(sqlImg);
-			stmtImg.setInt(1, goodsCode);
+			stmtImg.setInt(1, goods.getGoodsCode());
 			stmtImg.setString(2, img.getFilename());
 			stmtImg.setString(3, img.getOriginName());
 			stmtImg.setString(4, img.getContentType());

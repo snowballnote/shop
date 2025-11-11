@@ -8,7 +8,7 @@
 	<div class="emp-home">
 		<a href="${pageContext.request.contextPath}/emp/empIndex" class="home-link">
 			<span class="emoji">🏬</span>
-			Shop Admin
+			관리자
 		</a>
 	</div>
 
@@ -19,7 +19,6 @@
 				<span class="emoji">👤</span>
 				${loginEmp.empName} 님
 			</div>
-			<a href="${pageContext.request.contextPath}/emp/empLogout" style="color:#666; font-size:14px;">로그아웃</a>
 		</div>
 	</c:if>
 
@@ -87,6 +86,15 @@
 			<a href="${pageContext.request.contextPath}/emp/noticeList"
 			   class="${fn:contains(pageContext.request.requestURI, '/emp/noticeList') ? 'is-active' : ''}">
 				<span class="emoji">📢</span> 공지 사항
+			</a>
+		</li>
+	</ul>
+	<!-- 통계 자료 --><!-- AJax -->
+	<ul class="emp-nav">
+		<li>
+			<a href="${pageContext.request.contextPath}/emp/stats"
+			   class="${fn:contains(pageContext.request.requestURI, '/emp/stats') ? 'is-active' : ''}">
+				<span class="emoji">📢</span> 통계 자료
 			</a>
 		</li>
 	</ul>

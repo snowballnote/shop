@@ -26,7 +26,7 @@
 								<tr> 
 								<c:forEach var="b" items="${bestGoodsList}" varStatus="st" end="4"> 
 									<td class="cx-card">
-										<a class="cx-thumb" href="${pageContext.request.contextPath}/goods/detail?goodsCode=${b.goodsCode}">
+										<a class="cx-thumb" href="${pageContext.request.contextPath}/customer/goodsOne?goodsCode=${b.goodsCode}">
 											<%-- 💡 이미지 NULL 처리 적용 --%>
 											<c:choose>
 												<c:when test="${not empty b.filename}">
@@ -37,8 +37,9 @@
 												</c:otherwise>
 											</c:choose>
 										</a>
+										<!-- 이름가격 -->
 										<div class="cx-info">
-											<a class="cx-name" href="${pageContext.request.contextPath}/goods/detail?goodsCode=${b.goodsCode}">
+											<a class="cx-name" href="${pageContext.request.contextPath}/customer/goodsOne?goodsCode=${b.goodsCode}">
 												<c:out value="${b.goodsName}"/>
 											</a>
 											<div class="cx-price">
@@ -69,7 +70,7 @@
 									</c:if>
 
 									<td class="cx-card">
-										<a class="cx-thumb" href="${pageContext.request.contextPath}/goods/detail?goodsCode=${m.goodsCode}">
+										<a class="cx-thumb" href="${pageContext.request.contextPath}/customer/goodsOne?goodsCode=${m.goodsCode}">
 											
 											<c:choose>
 												<c:when test="${not empty m.filename}">
@@ -81,7 +82,7 @@
 											</c:choose>
 										</a>
 										<div class="cx-info">
-											<a class="cx-name" href="${pageContext.request.contextPath}/goods/detail?goodsCode=${m.goodsCode}">
+											<a class="cx-name" href="${pageContext.request.contextPath}/customer/goodsOne?goodsCode=${m.goodsCode}">
 												<c:out value="${m.goodsName}"/>
 											</a>
 											<div class="cx-price">
