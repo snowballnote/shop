@@ -64,7 +64,7 @@
 	<div class="emp-menu__title">상품 관리</div>
 	<ul class="emp-nav">
 		<li>
-			<a href="${pageContext.request.contextPath}/emp/goodsList"
+			<a href="${pageContext.request.contextPath}/emp/empGoodsList"
 			   class="${fn:contains(pageContext.request.requestURI, '/emp/goodsList') ? 'is-active' : ''}">
 				<span class="emoji">🛍️</span> 상품 목록
 			</a>

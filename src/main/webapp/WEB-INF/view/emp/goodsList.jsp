@@ -72,13 +72,13 @@
 			<c:if test="${not empty goodsList}">
 				<div class="pagination">
 					<c:if test="${currentPage > 1}">
-						<a class="page-btn" href="${pageContext.request.contextPath}/emp/goodsList?currentPage=${currentPage - 1}">이전</a>
+						<a class="page-btn" href="${pageContext.request.contextPath}/emp/empGoodsList?currentPage=${currentPage - 1}">이전</a>
 					</c:if>
 
 					<span class="page-info">${currentPage} / ${lastPage}</span>
 
 					<c:if test="${currentPage < lastPage}">
-						<a class="page-btn" href="${pageContext.request.contextPath}/emp/goodsList?currentPage=${currentPage + 1}">다음</a>
+						<a class="page-btn" href="${pageContext.request.contextPath}/emp/empGoodsList?currentPage=${currentPage + 1}">다음</a>
 					</c:if>
 				</div>
 			</c:if>

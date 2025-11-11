@@ -96,6 +96,6 @@ public class AddGoodsController extends HttpServlet {
 			return;
 		}
 		
-		response.sendRedirect(request.getContextPath()+"/emp/goodsList");
+		response.sendRedirect(request.getContextPath()+"/emp/empGoodsList");
 	}
 }

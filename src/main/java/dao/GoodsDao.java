@@ -13,6 +13,92 @@ import dto.Goods;
 import dto.GoodsImg;
 
 public class GoodsDao {
+	// /emp/goodsList
+	// 전체 굿즈 리스트 확인
+	public List<Map<String, Object>> selectGoodsListForEmp(int beginRow, int rowPerPage) throws Exception {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<Map<String, Object>> list = new ArrayList<>();
+
+		String sql = """
+				SELECT
+					gi.filename filename
+					, g.goods_code   goodsCode
+					, g.goods_name   goodsName
+					, g.goods_price  goodsPrice
+					, g.soldout soldout
+					, g.point_rate pointRate
+				FROM goods g LEFT JOIN goods_img gi
+				ON g.goods_code = gi.goods_code
+				ORDER BY g.goods_code DESC
+				OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
+			""";
+
+		try {
+			conn = DBConnection.getConn();
+			stmt = conn.prepareStatement(sql);
+
+			stmt.setInt(1, beginRow);
+			stmt.setInt(2, rowPerPage);
+
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Map<String, Object> m = new HashMap<>();
+				m.put("filename", rs.getString("filename"));
+				m.put("goodsCode", rs.getInt("goodsCode"));
+				m.put("goodsName", rs.getString("goodsName"));
+				m.put("goodsPrice", rs.getInt("goodsPrice"));
+				m.put("soldout", rs.getString("soldout"));
+				m.put("pointRate", rs.getDouble("pointRate"));
+				list.add(m);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(stmt != null) stmt.close();
+				if(conn != null) conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return list;
+	}
+
+	// 전체 굿즈 수 (페이지 계산용) - 직원용
+	public int countGoodsForEmp() throws Exception {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int total = 0;
+
+		String sql = "SELECT COUNT(*) cnt FROM goods";
+
+		try {
+			conn = DBConnection.getConn();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				total = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(stmt != null) stmt.close();
+				if(conn != null) conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return total;
+	}
+	
 	// /customer/goodsOne
 	public Map<String, Object> selectGoodsOne(int goods_code) throws Exception {
 		Connection conn = null;
@@ -237,7 +323,7 @@ public class GoodsDao {
 			
 			// 2) goods 입력
 			stmtGoods = conn.prepareStatement(sqlGoods);
-			stmtGoods.setInt(1, goods.getGoodsCode());
+			stmtGoods.setInt(1, goodsCode);
 			stmtGoods.setString(2, goods.getGoodsName());
 			stmtGoods.setInt(3, goods.getGoodsPrice());
 			stmtGoods.setInt(4, goods.getEmpCode());
@@ -250,7 +336,7 @@ public class GoodsDao {
 			}
 			// 3) // 상품입력에 성공하면 img 입력
 			stmtImg = conn.prepareStatement(sqlImg);
-			stmtImg.setInt(1, goods.getGoodsCode());
+			stmtImg.setInt(1, goodsCode);
 			stmtImg.setString(2, img.getFilename());
 			stmtImg.setString(3, img.getOriginName());
 			stmtImg.setString(4, img.getContentType());

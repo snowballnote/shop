@@ -11,12 +11,12 @@ import dao.GoodsDao;
 
 @WebServlet("/customer/goodsList")
 public class GoodsListController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private GoodsDao goodsDao;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		GoodsDao goodsDao = new GoodsDao();
+		goodsDao = new GoodsDao();
 
 		// -----------------------------------------------------------
 		// 1. 페이지네이션 변수 설정
