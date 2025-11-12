@@ -89,12 +89,33 @@
 			</a>
 		</li>
 	</ul>
-	<!-- 통계 자료 --><!-- AJax -->
+	
+	<!-- 주문 질문 관리 -->
+	<ul class="emp-nav">
+		<li>
+			<a href="${pageContext.request.contextPath}/emp/questionList"
+			   class="${fn:contains(pageContext.request.requestURI, '/emp/questionList') ? 'is-active' : ''}">
+				<span class="emoji">💬</span> 주문 질문 관리
+			</a>
+		</li>
+	</ul>
+	
+	<!-- 상품 리뷰 관리 -->
+	<ul class="emp-nav">
+		<li>
+			<a href="${pageContext.request.contextPath}/emp/reviweList"
+			   class="${fn:contains(pageContext.request.requestURI, '/emp/reviweList') ? 'is-active' : ''}">
+				<span class="emoji">⭐</span> 상품 리뷰 관리
+			</a>
+		</li>
+	</ul>
+	
+	<!-- 통계 자료 -->
 	<ul class="emp-nav">
 		<li>
 			<a href="${pageContext.request.contextPath}/emp/stats"
 			   class="${fn:contains(pageContext.request.requestURI, '/emp/stats') ? 'is-active' : ''}">
-				<span class="emoji">📢</span> 통계 자료
+				<span class="emoji">📊</span> 통계 자료
 			</a>
 		</li>
 	</ul>

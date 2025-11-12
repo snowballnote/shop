@@ -14,8 +14,8 @@ import com.google.gson.Gson;
 
 import dao.StatsDao;
 
-@WebServlet("/emp/totalPrice")
-public class TotalPriceRestController extends HttpServlet {
+@WebServlet("/emp/orderPrice")
+public class OrderPriceRestController extends HttpServlet {
 	private StatsDao statsDao;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String fromYM = request.getParameter("fromYM");
@@ -23,13 +23,12 @@ public class TotalPriceRestController extends HttpServlet {
 
 		response.setContentType("application/json;charset=UTF-8");
 		statsDao = new StatsDao();
-		List<Map<String, Object>> priceList = statsDao.selectOrderTotalPriceByYM(fromYM, toYM);
+		List<Map<String, Object>> orderList = statsDao.selectOrderPriceByYM(fromYM, toYM);
 		
 		Gson gson = new Gson();
-		String jsonResult = gson.toJson(priceList);
+		String jsonResult = gson.toJson(orderList);
 		PrintWriter out = response.getWriter();
 		out.print(jsonResult);
 		out.flush();
 	}
-
 }

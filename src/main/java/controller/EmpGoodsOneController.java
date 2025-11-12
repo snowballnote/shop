@@ -10,8 +10,8 @@ import java.util.Map;
 
 import dao.GoodsDao;
 
-@WebServlet("/customer/goodsOne")
-public class GoodsOneController extends HttpServlet {
+@WebServlet("/emp/empGoodsOne")
+public class EmpGoodsOneController extends HttpServlet {
 	private GoodsDao goodsDao;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String goodsCode = request.getParameter("goodsCode");
@@ -24,9 +24,17 @@ public class GoodsOneController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		 
+		
+		// 상품이 없을 경우 404 처리
+		if (goods == null) {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND, "해당 상품을 찾을 수 없습니다.");
+			return;
+		}
+				
 		request.setAttribute("goods", goods);
 		
-		request.getRequestDispatcher("/WEB-INF/view/customer/goodsOne.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/emp/empGoodsOne.jsp").forward(request, response);
 	}
+
+
 }

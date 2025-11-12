@@ -1,0 +1,109 @@
+/* 관리자 통계 페이지 (empStats.css) */
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #f8f9fa;
+  color: #222;
+  margin: 0;
+  padding: 30px;
+}
+
+h1, h2, h3 {
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+input[type="text"] {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 14px;
+  margin: 0 3px;
+}
+
+button {
+  margin: 5px;
+  padding: 8px 12px;
+  background-color: #fff;
+  border: 1.5px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+#myChart {
+  display: block;
+  margin: 30px auto;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  max-width: 900px;
+  width: 100%;
+}
+
+/* 상단 날짜 입력과 버튼 영역 */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.controls label {
+  font-weight: 500;
+  margin-right: 4px;
+}
+
+.controls button {
+  flex-grow: 1;
+  min-width: 220px;
+}
+
+/* 버튼 그룹 스타일 */
+button#totalOrderBtn,
+button#totalPriceBtn {
+  background-color: #e9f2ff;
+}
+
+button#orderBtn,
+button#orderPriceBtn {
+  background-color: #fff5e6;
+}
+
+button#topTotalOrder,
+button#topTotalOrderPrice {
+  background-color: #e6ffef;
+}
+
+button#goodsTopOrder,
+button#goodsTopOrderPrice {
+  background-color: #f8e6ff;
+}
+
+button#genderOrder,
+button#genderOrderPrice {
+  background-color: #f2f2f2;
+}
+
+/* 반응형 대응 */
+@media (max-width: 768px) {
+  button {
+    width: 100%;
+  }
+  #myChart {
+    max-width: 100%;
+  }
+}

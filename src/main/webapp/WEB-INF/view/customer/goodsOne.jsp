@@ -75,7 +75,7 @@
 		$('#cartBtn').click(function(){
 			$('#myForm').attr('method', 'post');
 			// 🚨 컨텍스트 경로를 hidden input이 아닌 id로 가져와서 사용하도록 수정
-			$('#myForm').attr('action', $('#contextPath').val() + '/customer/insertCart');
+			$('#myForm').attr('action', $('#contextPath').val() + '/customer/addCart');
 			
 			alert('cartBtn: ' + $('#myForm').attr('method') + ',' + $('#myForm').attr('action'));
 			// $('#myForm').submit(); // 실제 전송 시 주석 해제
