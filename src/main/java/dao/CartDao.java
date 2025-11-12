@@ -68,7 +68,8 @@ public class CartDao {
 	    PreparedStatement stmt = null;
 	    
 	    String sql = """
-	    		
+	    		INSERT INTO cart(cart_code, goods_code, customer_code, cart_quantity, createdate)
+	    		VALUES(seq_cart.nextval, ?, ?, ?, sysdate);
 	    		""";
 	    try {
 	    	conn = DBConnection.getConn();
