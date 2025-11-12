@@ -46,7 +46,7 @@
 									<tr>
 										<td>${g.goodsCode}</td>
 										<td class="name-cell">
-											<a class="row-link" href="${pageContext.request.contextPath}/emp/goodsOne?goodsCode=${g.goodsCode}">
+											<a class="row-link" href="${pageContext.request.contextPath}/emp/empGoodsOne?goodsCode=${g.goodsCode}">
 												${g.goodsName}
 											</a>
 										</td>
