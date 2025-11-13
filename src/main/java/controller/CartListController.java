@@ -20,7 +20,15 @@ public class CartListController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Customer loginCustomer = (Customer)session.getAttribute("loginCustomer");
-		
+		if (loginCustomer == null) {
+		    response.sendRedirect(request.getContextPath() + "/customer/loginForm"); 
+		    return;
+		}
+		// ★★★ 바로 여기에 추가하세요! ★★★
+	    int currentCustomerCode = loginCustomer.getCustomerCode();
+	    System.out.println("★현재 로그인 고객 코드: " + currentCustomerCode);
+	    // ★★★ 여기까지 추가하세요! ★★★
+	    
 		cartDao = new CartDao();
 		List<Map<String, Object>> list = cartDao.selectCartList(loginCustomer.getCustomerCode());
 		request.setAttribute("list", list);

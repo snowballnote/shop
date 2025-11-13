@@ -8,7 +8,7 @@ public class DBConnection {
 		Class.forName("oracle.jdbc.driver.OracleDriver"); // 또는 oracle.jdbc.OracleDriver
 		Connection conn = DriverManager.getConnection(
 		    "jdbc:oracle:thin:@localhost:1521:xe",
-		    "gdj95",
+		    "GDJ95",
 		    "java1234"
 		);
 		return conn;

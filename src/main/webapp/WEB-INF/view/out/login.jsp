@@ -19,19 +19,19 @@
 			<form id="loginForm" method="post" action="${pageContext.request.contextPath}/out/login" autocomplete="off">
 				<div class="role-row" style="justify-content:center; margin-bottom:18px;">
 					<label>
-						<input type="radio" name="customerOrEmpSel" id="selCustomer" value="customer" 
+						<input type="radio" name="customerOrEmpSel" id="selCustomer" value="customer" checked
 							<c:if test="${empty param.customerOrEmpSel or param.customerOrEmpSel == 'customer'}">checked</c:if>>
 						Customer
 					</label>
 					<label>
-						<input type="radio" name="customerOrEmpSel" id="selEmp" value="emp" checked
+						<input type="radio" name="customerOrEmpSel" id="selEmp" value="emp" 
 							<c:if test="${param.customerOrEmpSel == 'emp'}">checked</c:if>>
 						Employee
 					</label>
 				</div>
 
 				<div class="input-row">
-					<input value="admin2" type="text" name="id" id="id" class="input" placeholder="ID">
+					<input value="customer1" type="text" name="id" id="id" class="input" placeholder="ID">
 				</div>
 				<div class="input-row">
 					<input value="1234" type="password" name="pw" id="pw" class="input" placeholder="Password">

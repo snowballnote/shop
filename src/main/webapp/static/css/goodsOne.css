@@ -1,174 +1,173 @@
-/* goodsOne.css */
-
-/* -------------------------------------------------- */
-/* 1. 기본 레이아웃 및 컨테이너 */
-/* -------------------------------------------------- */
-.page-container {
-    max-width: 1200px;
-    margin: 0 auto; 
-    padding: 0 20px 80px 20px; 
-}
-
-/* 상품 상세 정보를 감싸는 메인 Flex 컨테이너 */
-.goods-detail-wrap {
-    display: flex;
-    justify-content: space-between;
-    padding: 50px 0;
-}
-
-/* 왼쪽: 상품 이미지 영역 */
-.goods-detail-wrap .img-area {
-    width: 45%; 
-    flex-shrink: 0;
-}
-
-/* 오른쪽: 상품 정보 및 옵션 영역 */
-.goods-detail-wrap .info-area {
-  	width: 50%; 
-    padding: 30px; /* 🚨 내부 여백 추가 (테두리 안쪽) */
-    padding-left: 5%; /* 기존 값 유지하면서 내부 패딩 추가 */
-
-    /* 🚨 검은색 실선 테두리 추가 및 둥근 모서리 */
-    border: 1px solid #000;
-    border-radius: 10px; /* 둥근 모서리 추가 */
-}
-
-/* 상품 이미지 스타일 */
-.goods-detail-wrap .img-area img {
-    width: 400px;
-    height: 500px;
-    object-fit: cover;
-    display: block;
-    border: 1px solid #000000;
-}
-
-
-/* -------------------------------------------------- */
-/* 2. 상품 정보 테이블 스타일 (재정의) */
-/* -------------------------------------------------- */
-
-.goods-info-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    font-size: 1rem;
-    color: #333;
-    /* 테이블 자체에 특별한 테두리나 배경은 적용하지 않습니다. */
-}
-
-/* 테이블의 행 구분선은 이미지 스타일을 위해 제거하거나 최소화합니다. */
-.goods-info-table tr {
-    border-bottom: none; 
-}
-
-/* 테이블 셀 */
-.goods-info-table td {
-    padding: 10px 0; /* 패딩을 줄여서 밀착시킵니다. */
+/* 기본 스타일 초기화 및 폰트 설정 */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #ffffff; /* 흰색 배경 */
+    color: #1a1a1a;
+    margin: 0;
+    padding: 0;
     line-height: 1.5;
 }
 
-/* 테이블 왼쪽 (제목) 컬럼 */
-.goods-info-table td:first-child {
-    width: 120px; 
-    font-weight: normal; /* 제목은 굵게 하지 않고 일반 텍스트로 처리 */
-    color: #555; /* 색상 연하게 */
-    text-transform: none; /* 대문자 사용 안함 */
-    padding-right: 15px;
+/* 전체 컨테이너 및 레이아웃 */
+.product-detail-container {
+    width: 90%;
+    max-width: 1400px; /* 레퍼런스처럼 넓게 */
+    margin: 50px auto;
 }
 
-/* 상품명 입력 필드 스타일 */
-.goods-info-table input[type="text"][readonly] {
-    width: calc(100% - 20px);
-    border: none;
-    background: transparent;
-    font-size: 1.4rem; /* 상품명은 크게 강조 */
-    font-weight: bold;
-    color: #000;
+.goods-detail-wrap {
+    display: flex;
+    gap: 50px; /* 이미지와 정보 사이 간격 */
+    justify-content: center;
+}
+
+/* 이미지 영역 - 레퍼런스는 이미지 영역이 더 넓습니다. */
+.product-image-area {
+    flex: 3; /* 정보 영역보다 이미지 영역을 더 넓게 설정 */
+    max-width: 60%;
+}
+
+.main-product-image {
+    width: 100%;
+    height: auto;
+    /* 레퍼런스 이미지는 테두리나 그림자가 없습니다. */
+    border-radius: 0; 
+    display: block;
+}
+
+/* 상품 정보 및 구매 폼 영역 - 정보 영역은 깔끔하게 정렬됩니다. */
+.product-info-area {
+    flex: 2; /* 이미지 영역보다 좁게 설정 */
+    max-width: 400px;
     padding: 0;
-    margin-bottom: 5px; /* 가격과 간격 */
 }
 
-/* 가격, 포인트 등의 값 스타일 */
-/* 가격과 관련된 행을 굵게 처리하여 강조 */
-.goods-info-table tr:nth-child(2) td:nth-child(2) { /* goodsPrice 행 */
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #000;
+/* 상품명 및 가격 */
+.product-name {
+    font-size: 1.5em; /* 레퍼런스는 폰트가 크지 않습니다. */
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
 }
 
-/* 품절 표시 */
+.product-price {
+    font-size: 1.1em;
+    font-weight: 400;
+    color: #444;
+    margin-bottom: 25px;
+}
+
+/* 정보 구분선 - 레퍼런스처럼 얇고 미니멀하게 */
+.info-divider {
+    border-top: 1px solid #e0e0e0;
+    margin: 15px 0;
+}
+
+/* 정보 행 스타일 */
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 1em;
+}
+
+.info-label {
+    color: #555;
+    font-weight: 400;
+}
+
+.info-content {
+    font-weight: 500;
+}
+
+/* 재고/품절 상태 (레퍼런스 이미지의 LOW STOCK과 유사하게) */
 .soldout-status {
-    font-weight: bold;
     color: #d9534f;
-    display: inline-block;
-    padding: 5px 10px;
-    border: 1px solid #d9534f;
-    font-size: 0.9rem;
-    margin-top: 10px;
+    font-weight: 600;
+    background-color: #fce8e8; /* 배경색으로 살짝 강조 */
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 0.85em;
 }
-.stock-status {
-    font-weight: bold;
+
+.stock-status.in-stock {
     color: #5cb85c;
+    font-weight: 600;
 }
 
-
-/* -------------------------------------------------- */
-/* 3. 옵션 (수량) 선택 박스 스타일 (이미지 박스 스타일 반영) */
-/* -------------------------------------------------- */
-
-/* 수량 선택 행에 특별한 클래스를 적용하여 박스 디자인을 만듭니다. */
-.goods-info-table .quantity-row td {
-    padding-top: 20px;
-    padding-bottom: 20px;
+/* 수량 선택 드롭다운 */
+.quantity-selector {
+    padding: 15px 0;
 }
 
-.goods-info-table select {
-    /* 🚨 이미지의 사이즈 선택 박스처럼 테두리를 둥글게 처리합니다. */
-    width: 100px; /* 너비를 고정하여 옵션 박스처럼 보이게 */
-    padding: 10px 15px;
+.quantity-input {
+    padding: 8px 12px;
     border: 1px solid #ccc;
-    border-radius: 25px; /* 둥근 모양 */
-    font-size: 1rem;
-    text-align: center;
-    -webkit-appearance: none; /* 기본 셀렉트 박스 스타일 제거 */
-    -moz-appearance: none;
-    appearance: none;
+    border-radius: 4px;
+    font-size: 1em;
     cursor: pointer;
+    background-color: #ffffff;
 }
 
-/* -------------------------------------------------- */
-/* 4. 버튼 영역 (이미지에서 본 Add to Bag 스타일 반영) */
-/* -------------------------------------------------- */
-
+/* 버튼 영역 - 레퍼런스처럼 단색 배경에 간결하게 */
 .button-group {
-    margin-top: 30px;
     display: flex;
     flex-direction: column; /* 세로로 쌓기 */
-    gap: 15px;
+    gap: 10px;
+    margin-top: 30px;
 }
 
-/* Add to Bag (장바구니) 버튼 스타일 */
-#cartBtn { 
+.action-button {
     width: 100%;
-    padding: 18px 20px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    background-color: #333; /* 이미지처럼 진한 회색/검은색 */
-    color: #fff;
-    border-radius: 5px;
-    border: none;
+    padding: 14px 20px;
+    font-size: 1em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid #1a1a1a; /* 테두리 추가 */
+    border-radius: 0; /* 모서리를 각지게 */
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
 }
 
-/* 바로 주문 (Add to Wishlist 역할) 버튼 스타일 */
-/* 이미지에서 바로 주문 버튼은 Wishlist처럼 작은 텍스트로 처리 */
-#orderBtn {
-    width: 100%;
-    padding: 10px 0;
-    font-size: 0.9rem;
-    font-weight: 500;
-    background: transparent;
-    color: #333;
-    border: none;
-    text-decoration: underline; /* 밑줄 추가 */
-    text-align: center;
+/* 장바구니 버튼 (검은색 배경) */
+.add-to-cart-button {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.add-to-cart-button:hover {
+    background-color: #444;
+    color: white;
+}
+
+/* 바로주문 버튼 (흰색 배경, 검은색 테두리) */
+.buy-now-button {
+    background-color: white;
+    color: #1a1a1a;
+}
+
+.buy-now-button:hover {
+    background-color: #f5f5f5;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .goods-detail-wrap {
+        flex-direction: column; 
+        gap: 20px;
+    }
+
+    .product-image-area {
+        max-width: 100%;
+    }
+
+    .product-info-area {
+        max-width: 100%;
+        padding: 0 10px; /* 모바일에서 좌우 여백 추가 */
+    }
+    
+    .product-name {
+        font-size: 1.3em;
+    }
 }

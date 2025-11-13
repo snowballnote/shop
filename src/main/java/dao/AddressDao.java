@@ -73,15 +73,16 @@ public class AddressDao {
 				""";
 		
 		// 주소 개수가 5개 초과일 때 가장 오래된 주소(address_code가 가장 작은) 삭제
+		// 특정 customer_code에 해당하는 주소만 삭제하도록 수정해야 함!
 		String sql2 = """
 					DELETE FROM address
-					WHERE address_code = (SELECT MIN(address_code) FROM Address)
+					WHERE address_code = (SELECT MIN(address_code) FROM address WHERE customer_code = ?)
 				""";
 		
-		// 새 주소 삽입 : seq_address.nextval을 사용하여 address_code 자동 부여
+		// 새 주소 삽입
 		String sql3 = """
 					INSERT INTO address(address_code, customer_code, address, createdate)
-				    VALUES(seq_address.nextval, ?, ?, SYSDATE)
+					VALUES(seq_address.nextval, ?, ?, SYSDATE)
 				""";
 		
 		try {
@@ -104,7 +105,7 @@ public class AddressDao {
 			
 			// 새 주소 삽입
 			stmt3 = conn.prepareStatement(sql3);
-			stmt3.setInt(1, address.getAddressCode());
+			stmt3.setInt(1, address.getCustomerCode());
 			stmt3.setString(2, address.getAddress());
 			row = stmt3.executeUpdate(); // 삽입된 행 수 저장
 			

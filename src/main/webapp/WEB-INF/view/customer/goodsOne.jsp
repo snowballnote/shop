@@ -3,92 +3,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>shop</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/goodsOne.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>상품 상세 - ${goods.goodsName}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/goodsOne.css">
 </head>
 <body>
-	<c:import url="/WEB-INF/view/customer/customerHeader.jsp" />
-	
-	<div class="page-container">
-	    <div class="goods-detail-wrap">
+    <c:import url="/WEB-INF/view/customer/customerHeader.jsp" />
+    
+    <div class="product-detail-container">
+        <div class="goods-detail-wrap">
+        
+            <div class="product-image-area">
+                <img src="${pageContext.request.contextPath}/upload/${goods.filename}" alt="${goods.goodsName}" class="main-product-image">
+            </div>
+            
+            <div class="product-info-area">
+                <form id="myForm">
+                    <input type="hidden" id="contextPath" value="${pageContext.request.contextPath}"> 
+                    <input type="hidden" name="goodsCode" value="${goods.goodsCode}">
+                    
+                    <h1 class="product-name">${goods.goodsName}</h1>
+                    <p class="product-price"><strong>${goods.goodsPrice}</strong> 원</p>
+                    
+                    <div class="info-divider"></div>
+
+                    <div class="info-row">
+                        <span class="info-label">💰 적립률</span>
+                        <span class="info-content">${goods.pointRate} %</span>
+                    </div>
+
+                    <div class="info-row">
+                        <span class="info-label">📦 재고 상태</span>
+                        <span class="info-content">
+                            <c:choose>
+                                <c:when test="${goods.soldout eq '1'}">
+                                    <span class="soldout-status">품절 (SOLD OUT)</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="stock-status in-stock">재고 있음 (IN STOCK)</span>
+                                </c:otherwise>
+                            </c:choose>
+                        </span>
+                    </div>
+
+                    <div class="info-divider"></div>
+                    
+                    <div class="info-row quantity-selector"> 
+                        <span class="info-label">수량 선택</span>
+                        <select name="cartQuantity" class="quantity-input"> 
+                            <option value="1" selected>1</option> 
+                            <c:forEach var="n" begin="2" end="10">
+                                <option value="${n}">${n}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    
+                    <div class="info-divider"></div>
+
+                    <div class="button-area button-group"> 
+                        <button id="cartBtn" type="button" class="action-button add-to-cart-button">🛒 장바구니</button>
+                        <button id="orderBtn" type="button" class="action-button buy-now-button">🛍️ 바로주문</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+	 // 장바구니 버튼 클릭 이벤트
+	    $('#cartBtn').click(function(){
+	        $('#myForm').attr('method', 'post');
+	        // contextPath는 hidden input에서 가져옴
+	        $('#myForm').attr('action', $('#contextPath').val() + '/customer/addCart'); 
+	        
+	        // console.log('장바구니 전송 준비: ' + $('#myForm').attr('action'));
+	        $('#myForm').submit(); 
+	    });
 	    
-	        <div class="img-area">
-				<img src="${pageContext.request.contextPath}/upload/${goods.filename}" alt="${goods.goodsName}">
-			</div>
-			
-			<div class="info-area">
-				<form id="myForm">
-					<input type="hidden" id="contextPath" value="${pageContext.request.contextPath}"> 
-					<input type="hidden" name="goodsOne" value="${goods.goodsCode}">
-					
-					<table class="goods-info-table">
-						<tr>
-							<td>상품명</td>
-							<td>
-								<input type="text" value="${goods.goodsName}" id="goodsName" name="goodsName" readonly>
-							</td>
-						</tr>
-						<tr>
-							<td>판매가</td>
-							<td>${goods.goodsPrice} 원</td>
-						</tr>
-						<tr>
-							<td>적립률</td>
-							<td>${goods.pointRate} %</td>
-						</tr>
-						<tr>
-							<td>품절 여부</td>
-							<td>
-							    <c:choose>
-							        <c:when test="${goods.soldout eq '1'}">
-							            <span class="soldout-status">품절 (SOLD OUT)</span>
-							        </c:when>
-							        <c:otherwise>
-							            <span class="stock-status">재고 있음 (IN STOCK)</span>
-							        </c:otherwise>
-							    </c:choose>
-							</td>
-						</tr>
-						<tr class="quantity-row"> 
-    <td>수량</td>
-    <td>
-        <select name="quantity"> 
-            <c:forEach var="n" begin="1" end="10">
-                <option value="${n}">${n}</option>
-            </c:forEach>
-        </select>
-    </td>
-</tr>
-					</table>
-					
-					<div class="button-group">
-					    <button id="cartBtn" type="button">장바구니</button><button id="orderBtn" type="button">바로주문</button></div>
-				</form>
-			</div>
-		</div>
-	</div>
-	<script>
-		// jQuery를 사용하기 위해 <head>에 script src 링크가 있는지 확인하세요.
-		
-		$('#cartBtn').click(function(){
-			$('#myForm').attr('method', 'post');
-			// 🚨 컨텍스트 경로를 hidden input이 아닌 id로 가져와서 사용하도록 수정
-			$('#myForm').attr('action', $('#contextPath').val() + '/customer/addCart');
-			
-			alert('cartBtn: ' + $('#myForm').attr('method') + ',' + $('#myForm').attr('action'));
-			// $('#myForm').submit(); // 실제 전송 시 주석 해제
-		});
-		
-		$('#orderBtn').click(function(){
-			$('#myForm').attr('method', 'get');
-			// 🚨 컨텍스트 경로를 hidden input이 아닌 id로 가져와서 사용하도록 수정
-			$('#myForm').attr('action', $('#contextPath').val() + '/customer/insertOrder');
-			
-			alert('orderBtn: ' + $('#myForm').attr('method') + ',' + $('#myForm').attr('action')); 
-			// $('#myForm').submit(); // 실제 전송 시 주석 해제
-		});
-	</script>
+	    // 바로주문 버튼 클릭 이벤트
+	    $('#orderBtn').click(function(){
+	        $('#myForm').attr('method', 'post');
+	        // contextPath는 hidden input에서 가져옴
+	        $('#myForm').attr('action', $('#contextPath').val() + '/customer/addOrders'); 
+	        
+	        // console.log('바로주문 전송 준비: ' + $('#myForm').attr('action'));
+	        $('#myForm').submit(); 
+	    });
+    </script>
 </body>
 </html>

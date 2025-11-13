@@ -30,5 +30,4 @@ public class Cart {
 		this.createdate = createdate;
 	}
 	
-	
 }

@@ -9,7 +9,44 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import dto.Orders;
+
 public class OrdersDao {
+	public int insertOrders(Orders o) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = """
+				INSERT INTO orders(
+					order_code, goods_code, customer_code, address_code, order_quantity
+					, order_price, order_state, createdate
+				)VALUES(
+					seq_order.nextval, ?, ?, ?, ?, ?, '주문완료', SYSDATE
+				)	
+			""";
+		int row = 0;
+		try {
+			conn = DBConnection.getConn();
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, o.getGoodsCode());
+			stmt.setInt(2, o.getCustomerCode());
+			stmt.setInt(3, o.getAddressCode());
+			stmt.setInt(4, o.getOrderQuantity());
+			stmt.setInt(5, o.getOrderPrice());
+			row = stmt.executeUpdate();
+			}catch (Exception e) { // DB 연결 및 SQL 오류를 catch
+	             e.printStackTrace();
+		}finally {
+			try {
+				 if (stmt != null) stmt.close();
+				 if (conn != null) conn.close();
+			}catch(SQLException e) {					
+				e.printStackTrace();
+			}
+		}
+		
+		return row;
+	}
+	
 	// 주문 리스트
 	public List<Map<String, Object>> selectOrdersList(int beginRow, int rowPerPage) throws Exception {
 		Connection conn = null;
